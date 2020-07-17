@@ -33,3 +33,7 @@ body {
   height: 4%;
   width: 4%;
 }
+
+div:nth-child(121), div:nth-child(221) {
+  background-color: blue;
+}
