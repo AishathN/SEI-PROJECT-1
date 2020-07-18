@@ -1,58 +1,85 @@
 function init() {
+  // * Dom Elements
+  const grid = document.querySelector('.grid')
+  const cells = []
+  // const obstacle = document.querySelector('div:nth-child(287)')
+  // console.log(obstacle)
+  // obstacle.classList.add('mazeWalls')
+
+  // * grid variables
+  const width = 4
+  const cellCount = width * width
 
   // * game variables
-  let playerPosition = document.querySelector("#\\34 88")
-  player = playerPosition.id
-  playerPosition.classList.add('sprite')
+  let playerPosition = 0
 
-  //player position = grid id
+  
 
-  function handleKeyUp(event) {
-    console.log('key pressed',event.keyCode)
-    
-    // playerPosition.classList.remove('sprite') // * remove pika class from old position
-    // // const x = pikaPosition % width
-    // // const y = Math.floor(pikaPosition / width)
 
-    // switch (event.keyCode) { // * calculate the new index
-    //   case 39: 
-    //   console.log('key pressed')
-    //     // playerPosition++
-    //     break
-    //   case 37:
-    //     // playerPosition--
-    //     break
-    //   case 38:
-    //     // playerPosition = playerPosition - 25
-    //     break
-    //   case 40:
-    //     // playerPosition = playerPosition - 25
-    //     break
-    //   default:
-    //     console.log('invalid key do nothing') 
-    // }
 
-    // playerPosition.classList.add('sprite') // * add the class back at the new position
+  //this creates the grid and assigns pikachu to the top left.
+  function createGrid(startingPosition) {
+    for (let i = 0; i < cellCount; i++) {
+      const cell = document.createElement('div')
+      // cell.textContent = i
+      grid.appendChild(cell)
+      cells.push(cell)
+    }
+    cells[startingPosition].classList.add('sprite')
   }
 
-  // const grid = document.querySelector('.grid')
-  // const cells = []
-  // const width = 25
-  // function createGrid() {
-  //   for (let i = 0; i < gridCellCount; i++) {
-  //     const cell = document.createElement('div')
-  //     cells.push(cell)
-  //     // cell.innerHTML = i
-  //     grid.appendChild(cell)
-  //   }
-  // }
+  function handleKeyUp(event) {
+    
+    cells[playerPosition].classList.remove('sprite') // * remove sprite class from old position
+    const x = playerPosition % width
+    const y = Math.floor(playerPosition / width)
 
-  // createGrid()
+    //rewrite below as an if else statement that identifies the cell ID it should not be going in as well
+    // eg if cellID !included in array
+    let calcUp = playerPosition + 1
+    let calcDown = playerPosition - 1
+    let case37 = playerPosition -= width
+    let case38 = playerPosition += width
 
-  // cells.innerHTML = 
+    console.log(case38, case37, calcUp, calcDown)
+
+    if (event.keyCode === 39) {
+      if (x < width - 1 && calcUp !== 5){
+        playerPosition = playerPosition +1 
+        console.log(playerPosition)
+        cells[playerPosition].classList.add('sprite')
+      }
+    }   
+    else if (event.keyCode === 37) {
+      if (x > 0 && calcDown !== 5) {
+        playerPosition = playerPosition - 1 
+        console.log(playerPosition)
+        cells[playerPosition].classList.add('sprite')
+      }    
+    }
+    else if (event.keyCode === 38) {
+      if (y > 0 && case37 !== 5) {
+        playerPosition = playerPosition - width
+        console.log(playerPosition)
+        cells[playerPosition].classList.add('sprite')
+      }
+    }
+    else if (event.keyCode === 40) {
+      if (y < width - 1 && case38 !== 5) {
+        playerPosition = playerPosition + width
+        console.log(playerPosition)
+        // cells[playerPosition].classList.add('sprite')
+      }
+    } 
+
+    cells[playerPosition].classList.add('sprite') // * add the class back at the new position
+  
+  }
+
+  createGrid(playerPosition)
 
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
-
 }
-document.addEventListener('DOMContentLoaded', init)
+
+window.addEventListener('DOMContentLoaded', init)
