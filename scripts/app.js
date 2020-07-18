@@ -28,36 +28,50 @@ function init() {
     const x = playerPosition % width
     const y = Math.floor(playerPosition / width)
 
-    let calcUp = playerPosition + 1 //use the div ids from above here
+    let calcUp = playerPosition + 1
     let calcDown = playerPosition - 1
     let case37 = playerPosition -= width
     let case38 = playerPosition += width
+    let cellup = null
+    let celldown = null
+    let cellright = null
+    let cellleft = null
+    
+    console.log(calcUp)
+    if (calcUp < 16){
+      cellright = cells[calcUp].classList.contains('maze')
+    }
+    if (calcDown > 0) {
+    cellleft = cells[calcDown].classList.contains('maze')
+    }
+    if (case37 > 0) {
+      cellup = cells[case37].classList.contains('maze')
+      }
+    celldown = cells[case38].classList.contains('maze')
+    console.log(celldown)
 
     console.log(case38, case37, calcUp, calcDown) // <-- testing calculations
-    // console.log(cells[3]) <-- testing whats being read here
     console.log(cells[playerPosition])
     if (event.keyCode === 39) {
       if (x < width - 1 && calcUp !== 5){ //<-- preliminary avoidance tests
         playerPosition = playerPosition + 1 
-        // console.log(playerPosition)
       }
     }   
     else if (event.keyCode === 37) {
       if (x > 0 && calcDown !== 5) {
         playerPosition = playerPosition - 1 
-        // console.log(playerPosition)
       }    
     }
     else if (event.keyCode === 38) {
-      if (y > 0 && case37 !== 5) {
+      if (y > 0 && !cellup) {
         playerPosition = playerPosition - width
-        // console.log(playerPosition)
       }
     }
     else if (event.keyCode === 40) {
-      if (y < width - 1 && case38 !== 5) {
+      if (y < width - 1 && !celldown) {
+        console.log(y)
+        console.log(!celldown)
         playerPosition = playerPosition + width
-        // console.log(playerPosition)
       }
     } 
 
