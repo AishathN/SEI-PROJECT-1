@@ -3,17 +3,12 @@ function init() {
   const grid = document.querySelector('.grid')
   const cells = []
 
-
   // * grid variables
   const width = 4
   const cellCount = width * width
 
   // * game variables
   let playerPosition = 0
-
-  
-  
-
 
 
   //this creates the grid and assigns pikachu to the top left.
@@ -25,60 +20,64 @@ function init() {
       cells.push(cell)
     }
     cells[startingPosition].classList.add('sprite')
-    cells[3].classList.add('maze')
   }
-  
-
   function handleKeyUp(event) {
     
-    cells[playerPosition].classList.remove('sprite') // * remove sprite class from old position
+    cells[playerPosition].classList.remove('sprite') 
+    // * remove sprite class from old position
     const x = playerPosition % width
     const y = Math.floor(playerPosition / width)
 
-    //rewrite below as an if else statement that identifies the cell ID it should not be going in as well
-    // eg if cellID !included in array
-    let calcUp = playerPosition + 1
+    let calcUp = playerPosition + 1 //use the div ids from above here
     let calcDown = playerPosition - 1
     let case37 = playerPosition -= width
     let case38 = playerPosition += width
 
-    console.log(case38, case37, calcUp, calcDown)
-
+    console.log(case38, case37, calcUp, calcDown) // <-- testing calculations
+    // console.log(cells[3]) <-- testing whats being read here
+    console.log(cells[playerPosition])
     if (event.keyCode === 39) {
-      if (x < width - 1 && calcUp !== 5){
-        playerPosition = playerPosition +1 
-        console.log(playerPosition)
-        // cells[playerPosition].classList.add('sprite')
+      if (x < width - 1 && calcUp !== 5){ //<-- preliminary avoidance tests
+        playerPosition = playerPosition + 1 
+        // console.log(playerPosition)
       }
     }   
     else if (event.keyCode === 37) {
       if (x > 0 && calcDown !== 5) {
         playerPosition = playerPosition - 1 
-        console.log(playerPosition)
-        // cells[playerPosition].classList.add('sprite')
+        // console.log(playerPosition)
       }    
     }
     else if (event.keyCode === 38) {
       if (y > 0 && case37 !== 5) {
         playerPosition = playerPosition - width
-        console.log(playerPosition)
-        // cells[playerPosition].classList.add('sprite')
+        // console.log(playerPosition)
       }
     }
     else if (event.keyCode === 40) {
       if (y < width - 1 && case38 !== 5) {
         playerPosition = playerPosition + width
-        console.log(playerPosition)
-        // cells[playerPosition].classList.add('sprite')
+        // console.log(playerPosition)
       }
     } 
 
-    cells[playerPosition].classList.add('sprite') // * add the class back at the new position
-  
-  }
+    cells[playerPosition].classList.add('sprite') 
+    // * add the class back at the new position
 
+  }
+  
+  //call the grid below so the cells exist
   createGrid(playerPosition)
 
+  cells[7].classList.add('maze') //<-- works because now the grid exists
+  // TO DO ------
+  //create function that loops through an array of numbers representing 
+  //cell IDs and assigns the class of maze to them. The cells do not have an array
+  //or container so use their index to specify and keep within a certain length.
+
+  //TO DO find out how to specify the class of a div being one you don't move into
+
+ 
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
 }
