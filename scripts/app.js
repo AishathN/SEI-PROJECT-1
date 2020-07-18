@@ -2,9 +2,7 @@ function init() {
   // * Dom Elements
   const grid = document.querySelector('.grid')
   const cells = []
-  // const obstacle = document.querySelector('div:nth-child(287)')
-  // console.log(obstacle)
-  // obstacle.classList.add('mazeWalls')
+
 
   // * grid variables
   const width = 4
@@ -13,6 +11,7 @@ function init() {
   // * game variables
   let playerPosition = 0
 
+  
   
 
 
@@ -26,7 +25,9 @@ function init() {
       cells.push(cell)
     }
     cells[startingPosition].classList.add('sprite')
+    cells[3].classList.add('maze')
   }
+  
 
   function handleKeyUp(event) {
     
@@ -47,21 +48,21 @@ function init() {
       if (x < width - 1 && calcUp !== 5){
         playerPosition = playerPosition +1 
         console.log(playerPosition)
-        cells[playerPosition].classList.add('sprite')
+        // cells[playerPosition].classList.add('sprite')
       }
     }   
     else if (event.keyCode === 37) {
       if (x > 0 && calcDown !== 5) {
         playerPosition = playerPosition - 1 
         console.log(playerPosition)
-        cells[playerPosition].classList.add('sprite')
+        // cells[playerPosition].classList.add('sprite')
       }    
     }
     else if (event.keyCode === 38) {
       if (y > 0 && case37 !== 5) {
         playerPosition = playerPosition - width
         console.log(playerPosition)
-        cells[playerPosition].classList.add('sprite')
+        // cells[playerPosition].classList.add('sprite')
       }
     }
     else if (event.keyCode === 40) {

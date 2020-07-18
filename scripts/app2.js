@@ -1,12 +1,15 @@
 function init() {
 
   // * game variables
-  let playerPosition = document.querySelector("#\\34 88")
+  // let playerPosition = document.querySelector("#\\34 88")
   playerPosition.classList.add('sprite')
-  console.log(playerPosition)
+  // console.log(playerPosition)
   //create array that represents all the divs in the grid
   //then you can use playerPosition.id 
 
+  const mazepiece1 = document.querySelector('body > div > div > div:nth-child(6)')
+  mazepiece1.classList.add('maze')
+  console.log(mazepiece1)
 
   function handleKeyUp(event) {
     // console.log('key pressed',event.keyCode)
@@ -40,6 +43,7 @@ function init() {
 
     playerPosition.classList.add('sprite') // * add the class back at the new position
   }
+
 
   // const grid = document.querySelector('.grid')
   // const cells = []
