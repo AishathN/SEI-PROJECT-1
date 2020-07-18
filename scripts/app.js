@@ -16,6 +16,7 @@ function init() {
 
   // createGrid()
 
+  // cells.innerHTML = 
 
 }
 document.addEventListener('DOMContentLoaded', init)
