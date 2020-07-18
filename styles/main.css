@@ -30,8 +30,8 @@ body {
 .grid div {
   border: 1px dotted lightgrey;
   flex-grow: 1;
-  height: 25%;
-  width: 25%;
+  height: 4%;
+  width: 4%;
 }
 
 .sprite{
