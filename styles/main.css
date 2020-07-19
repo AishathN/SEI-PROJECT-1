@@ -8,6 +8,30 @@ body {
   margin: 0;
 }
 
+.console{
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  background-color: darkslategray;
+  min-height:900px;
+}
+.rightSide {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  /* background-color: dimgray; */
+}
+
+.roundBtn{
+  margin:35px;
+  background-color: darkred;
+  border-radius: 100;
+  height: 100px;
+  width:100px;
+  font-size:25px ;
+}
+
 .grid-wrapper {
   height: 90vh;
   display: flex;
@@ -15,6 +39,15 @@ body {
   margin:20px;
 }
 
+.scoreboard{
+  width:200px;
+  text-align: center;
+  padding:12px;
+  background-color: linen;
+  /* margin:115px; */
+  min-height: 25px;
+  font-weight: bold;
+}
 .grid {
   align-items: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
@@ -90,11 +123,8 @@ body {
 }
 
 .powerUp{
-  background-image: url('../images/lightningpikachu.gif');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 100%;
-}
+  /* border: 2px white solid; */
+ }
 
 .pokeBall{
   background-image: url('../images/pokeball.gif');
