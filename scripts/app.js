@@ -129,12 +129,12 @@ function init() {
   //---------- ENEMY TIMER --------
   function startTimer(){
     setInterval(()=>{ 
-      // follow()
-      moveRandom() 
-    }, 500)
+      follow()
+      // moveRandom()
+    }, 400)
   }
 
-  //--- RANDOM MOVEMENT -- 
+  //--- RANDOM MOVEMENT ENEMY 1 -- 
   function moveRandom (){ 
     //remove class to make enemy disappear from current spot
     cells[enemy1Position].classList.remove('enemy1')
@@ -148,7 +148,6 @@ function init() {
     if (randomDirection === 0){
       if (x < width - 1 && !cells[enemy1Position - width].classList.contains('maze'))
       {enemy1Position = enemy1Position - width
-        // cells[enemy1Position].classList.add('enemy1')
       } 
       cells[enemy1Position].classList.add('enemy1')
     }
@@ -156,7 +155,6 @@ function init() {
     else if (randomDirection === 1){
       if (x > 0 && !cells[enemy1Position - 1].classList.contains('maze')) {
         enemy1Position = enemy1Position - 1 
-        // cells[enemy1Position].classList.add('enemy1')
       } 
       cells[enemy1Position].classList.add('enemy1')
     }
@@ -164,7 +162,6 @@ function init() {
     else if (randomDirection === 2) {
       if (y < width - 1  && !cells[enemy1Position + width].classList.contains('maze')) {
         enemy1Position = enemy1Position + width
-        // cells[enemy1Position].classList.add('enemy1')
       } 
       cells[enemy1Position].classList.add('enemy1')
     }
@@ -172,19 +169,50 @@ function init() {
     else if (randomDirection === 3){
       if (x < width - 1 && !cells[enemy1Position + 1].classList.contains('maze')){ 
         enemy1Position = enemy1Position + 1
-        // cells[enemy1Position].classList.add('enemy1')
       } 
       cells[enemy1Position].classList.add('enemy1')
     }
   }
 
   function follow(){
-    //if player position > enemyposition && less than width go right
+    //remove class to make enemy disappear from current spot
+    cells[enemy1Position].classList.remove('enemy1')
+    //declare variables needed for measurements
+    const x = enemy1Position % width
+    const y = Math.floor(enemy1Position / width)
+
+    if (playerPosition > enemy1Position && playerPosition - enemy1Position < width) 
+    {
+      if (x < width - 1 && !cells[enemy1Position + 1].classList.contains('maze')){ 
+        enemy1Position = enemy1Position + 1
+      cells[enemy1Position].classList.add('enemy1')
+      } else moveRandom()
+    } 
+    else if (playerPosition > enemy1Position) 
+    {
+      if (y < width - 1  && !cells[enemy1Position + width].classList.contains('maze')) {
+        enemy1Position = enemy1Position + width
+      cells[enemy1Position].classList.add('enemy1')
+      } else moveRandom()
+    } 
+    else if (playerPosition < enemy1Position && enemy1Position - playerPosition < width) 
+    {
+      if (x > 0 && !cells[enemy1Position - 1].classList.contains('maze')) {
+        enemy1Position = enemy1Position - 1 
+      } else moveRandom()
+      cells[enemy1Position].classList.add('enemy1')
+    } 
+    else if (playerPosition < enemy1Position)
+    {
+      if (x < width - 1 && !cells[enemy1Position - width].classList.contains('maze'))
+      {enemy1Position = enemy1Position - width
+      } else moveRandom()
+      cells[enemy1Position].classList.add('enemy1')
+    }
+    cells[enemy1Position].classList.add('enemy1')
     //else if player position > enemy position && greater than width go down
-    
     //if player position < enemyposition && < width go left
     //else if player position < enemyposition &&  > than width go up
-
     //else moveRandom()
   }
 
