@@ -11,6 +11,8 @@ function init() {
   let playerPosition = 0
   let playerScore = 0
   let cookieCount = 0
+  let enemy1Position = 0
+  let enemy1Distance = 0
 
 
   //------ GRID CREATION AND PLAYER RESET -------------
@@ -23,7 +25,9 @@ function init() {
     }
     cells[startingPosition + 487].classList.add('sprite')
     playerPosition = 487
-    cells[428].classList.add('cookie')
+    enemy1Position = 337
+    cells[startingPosition + 337].classList.add('enemy1')
+
   }
 
   //----------- MAZE CREATION -----------
@@ -53,6 +57,28 @@ function init() {
     ]
     mazeCoords1.map( coord =>{
       cells[coord-1].classList.add('maze')
+    })
+
+    const cookieCoords1 = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 52, 57,62, 64, 69, 74, 82, 87, 89, 94,
+    102, 107, 112, 113, 114, 119, 124, 127, 128, 129, 130, 131, 132, 133,
+    134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149,
+    152, 157, 159, 167, 169, 174, 177, 182, 184, 192, 194, 199, 202, 207, 209, 
+    210, 211, 212, 214, 215, 216, 217, 219, 224, 227, 228, 229, 230, 231, 232, 
+    244, 245, 246, 247, 248, 249, 257, 269, 282, 294, 307, 319, 332, 344, 357, 369,
+    382, 394, 407, 419, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437,
+    439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 452, 456, 462, 464, 470, 
+    474, 478, 479, 481, 482, 483, 484, 485, 486, 487, 489, 490, 491, 492, 493, 
+    494, 495, 497, 498, 504, 506, 508, 518, 520, 522
+  ]
+
+    cookieCoords1.map( coord =>{
+      cells[coord - 1].classList.add('cookie')
+    })
+
+    const pokeballCoords1 = [499, 477, 99, 77 ]
+    pokeballCoords1.map( coord =>{
+      cells[coord - 1].classList.add('pokeBall')
     })
   }
 
@@ -91,7 +117,33 @@ function init() {
       console.log(playerScore)
     }
   }
+
+  //---------- testing the enemy movement --------
+  function startTimer(){
+    
+    setInterval(()=>{
+
+      cells[enemy1Position].classList.remove('enemy1')
+      const x = enemy1Position % width
+      const y = Math.floor(enemy1Position / width)
+      if (x < width - 1 && !cells[enemy1Position - width].classList.contains('maze'))
+      {enemy1Position = enemy1Position - width
+      } else if (x < width - 1 && !cells[enemy1Position + 1].classList.contains('maze')){ //<-- preliminary avoidance tests
+        enemy1Position = enemy1Position + 1
+      } else if (y > 0 && !cells[enemy1Position - width].classList.contains('maze')) {
+        enemy1Position = enemy1Position - width
+      } else if (y < width -1  && !cells[enemy1Position + width].classList.contains('maze')) {
+        enemy1Position = enemy1Position + width
+      }
+      console.log(enemy1Position)
+      cells[enemy1Position].classList.add('enemy1')
+    }, 1000)
+    
+    
+  }
+  // startTimer()
   
+
   //call the grid below so the cells exist
   createGrid(playerPosition)
 
@@ -102,7 +154,7 @@ function init() {
   //populate cookies function, attach to game start, let cookiecount
   //keep track so when cookies === 0 you win.
 
- 
+  
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
 }
