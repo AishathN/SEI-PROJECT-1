@@ -65,6 +65,30 @@ body {
 
 }
 
+.enemy2{
+  background-image: url('../images/ekans.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+
+}
+
+.enemy3{
+  background-image: url('../images/meowth.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+
+}
+
+.enemy4{
+  background-image: url('../images/mewtwo.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+
+}
+
 .pokeBall{
   background-image: url('../images/pokeball.gif');
   background-repeat: no-repeat;

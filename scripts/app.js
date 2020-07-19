@@ -41,12 +41,12 @@ function init() {
       438, 463, 358, 383, 408, 368, 393, 418, 318, 308, 553, 554, 555, 556, 557, 558,
       559, 560, 561, 565, 566, 567, 568, 569, 570, 571, 572, 573, 523, 524, 503, 502,
       238, 158, 183, 208, 233, 258, 283, 168, 193, 218, 243, 268, 293, 270, 271, 
-      272, 273, 274, 252, 253, 254, 255, 256, 281, 306, 295, 302, 289, 290, 291, 285,
-      286, 287, 310, 335, 302, 303, 304, 305, 320, 321, 322, 323, 324, 352, 353, 354, 
+      272, 273, 274, 252, 253, 254, 255, 256, 281, 306, 295, 302, 291, 285,
+      310, 335, 302, 303, 304, 305, 320, 321, 322, 323, 324, 352, 353, 354, 
       356, 381, 402, 403, 404, 405, 406, 370, 371, 372, 373, 374, 395, 420, 421, 422, 
-      423, 424, 234, 235, 236, 240, 241, 242, 310, 335, 360, 361, 362, 363, 364, 365,
+      423, 424, 234, 235, 236, 240, 241, 242, 310, 335, 360, 361, 365,
       366, 316, 341, 453, 454, 455, 480, 505, 457, 458, 459, 460, 461, 507, 532, 471, 
-      472, 473, 496, 521, 519, 538, 563, 465, 466, 467, 468, 509, 510, 511, 
+      472, 473, 496, 521, 519, 538, 563, 465, 466, 467, 468, 509, 510, 511,331, 345,
       512, 513, 514, 515, 516, 517, 469, 50, 75, 100, 125, 150, 175, 200, 225, 250, 
       275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625, 601,
       602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 
@@ -121,27 +121,79 @@ function init() {
   //---------- testing the enemy movement --------
   function startTimer(){
     
-    setInterval(()=>{
+    setInterval(()=>{ moveRandom() 
 
-      cells[enemy1Position].classList.remove('enemy1')
-      const x = enemy1Position % width
-      const y = Math.floor(enemy1Position / width)
-      if (x < width - 1 && !cells[enemy1Position - width].classList.contains('maze'))
-      {enemy1Position = enemy1Position - width
-      } else if (x < width - 1 && !cells[enemy1Position + 1].classList.contains('maze')){ //<-- preliminary avoidance tests
-        enemy1Position = enemy1Position + 1
-      } else if (y > 0 && !cells[enemy1Position - width].classList.contains('maze')) {
-        enemy1Position = enemy1Position - width
-      } else if (y < width -1  && !cells[enemy1Position + width].classList.contains('maze')) {
-        enemy1Position = enemy1Position + width
-      }
-      console.log(enemy1Position)
-      cells[enemy1Position].classList.add('enemy1')
-    }, 1000)
+    }, 500)
     
     
   }
-  // startTimer()
+
+  function moveRandom (){ 
+    //remove class to make enemy disappear from current spot
+    cells[enemy1Position].classList.remove('enemy1')
+    //declare variables needed for measurements
+    const x = enemy1Position % width
+    const y = Math.floor(enemy1Position / width)
+    //create random number to choose path to come
+    const randomDirection = Math.floor(Math.random() * 4)
+    //checking outcome
+    // console.log(randomDirection)
+
+    if (randomDirection === 0){
+      if (x < width - 1 && !cells[enemy1Position - width].classList.contains('maze'))
+      {enemy1Position = enemy1Position - width
+      } else if (x > 0 && !cells[enemy1Position - 1].classList.contains('maze')) {
+        enemy1Position = enemy1Position - 1 
+      }  else if (y > 0 && !cells[enemy1Position - width].classList.contains('maze')) {
+        enemy1Position = enemy1Position - width
+      } else if (x < width - 1 && !cells[enemy1Position + 1].classList.contains('maze')){ //<-- preliminary avoidance tests
+        enemy1Position = enemy1Position + 1
+      } cells[enemy1Position].classList.add('enemy1')
+    }
+
+    else if (randomDirection === 1){
+      if (x > 0 && !cells[enemy1Position - 1].classList.contains('maze')) {
+        enemy1Position = enemy1Position - 1 
+      } 
+      cells[enemy1Position].classList.add('enemy1')
+    }
+
+    else if (randomDirection === 2) {
+      if (y < width - 1  && !cells[enemy1Position + width].classList.contains('maze')) {
+        enemy1Position = enemy1Position + width
+      cells[enemy1Position].classList.add('enemy1')
+      } else if (x > 0 && !cells[enemy1Position - 1].classList.contains('maze')) {
+        enemy1Position = enemy1Position - 1 
+      cells[enemy1Position].classList.add('enemy1')
+      } else if (y > 0 && !cells[enemy1Position - width].classList.contains('maze')) {
+        enemy1Position = enemy1Position - width
+      cells[enemy1Position].classList.add('enemy1')
+      } 
+      cells[enemy1Position].classList.add('enemy1')
+    }
+
+    else if (randomDirection === 3){
+      if (x < width - 1 && !cells[enemy1Position + 1].classList.contains('maze')){ //<-- preliminary avoidance tests
+      enemy1Position = enemy1Position + 1
+      cells[enemy1Position].classList.add('enemy1')
+    } 
+      cells[enemy1Position].classList.add('enemy1')
+    }
+  }
+
+
+
+
+
+  // function moveDown (){
+  //   const x = enemy1Position % width
+  //   cells[enemy1Position].classList.remove('enemy1')
+  //   // const y = Math.floor(enemy1Position / width)
+  //   if (x < width - 1 && !cells[enemy1Position + width].classList.contains('maze'))
+  //   {enemy1Position = enemy1Position + width
+  //   }
+  //   cells[enemy1Position].classList.add('enemy1')
+  // }
   
 
   //call the grid below so the cells exist
@@ -149,6 +201,10 @@ function init() {
 
  
   createMaze()
+
+  startTimer()
+
+
   // TO DO ------
 
   //populate cookies function, attach to game start, let cookiecount
