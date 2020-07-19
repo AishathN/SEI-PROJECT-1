@@ -9,9 +9,11 @@ function init() {
 
   // * game variables
   let playerPosition = 0
+  let playerScore = 0
+  let cookieCount = 0
 
 
-  //this creates the grid and assigns pikachu to the top left.
+  //------ GRID CREATION AND PLAYER RESET -------------
   function createGrid(startingPosition) {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
@@ -19,41 +21,12 @@ function init() {
       grid.appendChild(cell)
       cells.push(cell)
     }
-    cells[startingPosition+487].classList.add('sprite')
+    cells[startingPosition + 487].classList.add('sprite')
     playerPosition = 487
+    cells[428].classList.add('cookie')
   }
-  function handleKeyUp(event) {
-    
-    cells[playerPosition].classList.remove('sprite') 
-    // * remove sprite class from old position
-    const x = playerPosition % width
-    const y = Math.floor(playerPosition / width)
-    //finding the solution below was more painful and arduous than I care to admit.
-    if (event.keyCode === 39) {
-      if (x < width - 1 && !cells[playerPosition + 1].classList.contains('maze')){ //<-- preliminary avoidance tests
-        playerPosition = playerPosition + 1 
-      }
-    } else if (event.keyCode === 37) {
-      if (x > 0 && !cells[playerPosition - 1].classList.contains('maze')) {
-        playerPosition = playerPosition - 1 
-      }    
-    } else if (event.keyCode === 38) {
-      if (y > 0 && !cells[playerPosition - width].classList.contains('maze')) {
-        playerPosition = playerPosition - width
-      }
-    } else if (event.keyCode === 40) {
-      if (y < width -1  && !cells[playerPosition + width].classList.contains('maze')) {
-        playerPosition = playerPosition + width
-      }
-    } 
 
-    cells[playerPosition].classList.add('sprite') 
-    // * add the class back at the new position
-  }
-  
-  //call the grid below so the cells exist
-  createGrid(playerPosition)
-
+  //----------- MAZE CREATION -----------
   function createMaze(){
     const mazeCoords1 = 
     [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,
@@ -69,26 +42,66 @@ function init() {
       356, 381, 402, 403, 404, 405, 406, 370, 371, 372, 373, 374, 395, 420, 421, 422, 
       423, 424, 234, 235, 236, 240, 241, 242, 310, 335, 360, 361, 362, 363, 364, 365,
       366, 316, 341, 453, 454, 455, 480, 505, 457, 458, 459, 460, 461, 507, 532, 471, 
-      472, 473, 496, 521, 519, 538, 563, 462, 464, 465, 466, 467, 468, 509, 510, 511, 
+      472, 473, 496, 521, 519, 538, 563, 465, 466, 467, 468, 509, 510, 511, 
       512, 513, 514, 515, 516, 517, 469, 50, 75, 100, 125, 150, 175, 200, 225, 250, 
       275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625, 601,
       602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617, 
       618, 619, 620, 621, 622, 623, 624, 26,51, 76, 101, 126, 151, 176, 201, 226, 251,
       276, 301, 326, 351, 376, 401, 426, 451, 476, 501, 526, 551, 576, 160, 185, 161,
-      162, 163, 164, 165, 166, 186, 187, 188, 189, 190, 191
+      162, 163, 164, 165, 166, 186, 187, 188, 189, 190, 191, 355, 544, 213
 
     ]
     mazeCoords1.map( coord =>{
       cells[coord-1].classList.add('maze')
     })
   }
+
+  // ---------------CHARACTER MOVE WITH MAZE COLLISION DETECTION ---------------
+  function handleKeyUp(event) {
+    // sprite removal to simulate movement
+    cells[playerPosition].classList.remove('sprite') 
+    
+    const x = playerPosition % width
+    const y = Math.floor(playerPosition / width)
+    //finding the solution below was more painful and arduous than I care to admit.
+    if (event.keyCode === 39 || event.keyCode === 68) {
+      if (x < width - 1 && !cells[playerPosition + 1].classList.contains('maze')){ //<-- preliminary avoidance tests
+        playerPosition = playerPosition + 1 
+      }
+    } else if (event.keyCode === 37 || event.keyCode === 65) {
+      if (x > 0 && !cells[playerPosition - 1].classList.contains('maze')) {
+        playerPosition = playerPosition - 1 
+      }    
+    } else if (event.keyCode === 38 || event.keyCode === 87) {
+      if (y > 0 && !cells[playerPosition - width].classList.contains('maze')) {
+        playerPosition = playerPosition - width
+      }
+    } else if (event.keyCode === 40 || event.keyCode === 83){
+      if (y < width -1  && !cells[playerPosition + width].classList.contains('maze')) {
+        playerPosition = playerPosition + width
+      }
+    } 
+    //sprite reapplication in whatever position has been decided above
+    cells[playerPosition].classList.add('sprite') 
+    //check for and eat cookies, log points
+    if (cells[playerPosition].classList.contains('cookie')){
+      // console.log('cookie detected nom nom')
+      cells[playerPosition].classList.remove('cookie')
+      playerScore += 100
+      console.log(playerScore)
+    }
+  }
+  
+  //call the grid below so the cells exist
+  createGrid(playerPosition)
+
+ 
   createMaze()
   // TO DO ------
 
+  //populate cookies function, attach to game start, let cookiecount
+  //keep track so when cookies === 0 you win.
 
-  //create function that loops through an array of numbers representing 
-  //cell IDs and assigns the class of maze to them. The cells do not have an array
-  //or container so use their index to specify and keep within a certain length.
  
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
