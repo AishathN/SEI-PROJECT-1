@@ -74,7 +74,7 @@ body {
 }
 
 .enemy3{
-  background-image: url('../images/meowth.gif');
+  background-image: url('../images/arbok.gif');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
@@ -82,11 +82,18 @@ body {
 }
 
 .enemy4{
-  background-image: url('../images/mewtwo.gif');
+  background-image: url('../images/Lickitung.gif');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
 
+}
+
+.powerUp{
+  background-image: url('../images/lightningpikachu.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
 }
 
 .pokeBall{

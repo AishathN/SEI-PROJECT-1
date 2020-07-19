@@ -15,9 +15,11 @@ function init() {
   // let enemy1Distance = 0
   let cookiesRemaining = 212
   let enemy2Position = 0
+  let enemy3Position = 0
+  let enemy4Position = 0
 
 
-  //------ GRID CREATION AND PLAYER RESET -------------
+  //------ GRID CREATION AND PLAYER/ENEMY RESET -------------
   function createGrid(startingPosition) {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
@@ -33,6 +35,8 @@ function init() {
     cells[startingPosition + 335].classList.add('enemy2')
     enemy3Position = 339
     cells[startingPosition + 339].classList.add('enemy3')
+    enemy4Position = 338
+    cells[startingPosition + 338].classList.add('enemy4')
 
   }
 
@@ -132,14 +136,16 @@ function init() {
     }
   }
 
-  //---------- ENEMY TIMER ENEMY1--------
-  
+  //---------- ENEMY TIMER --------
+  //TO DO set up a start game button to trigger this function
   function startTimer(){
     setInterval(()=>{ 
       // if class of enemy is afraid
       // flee function, else
       follow()
       follow2()
+      follow3()
+      follow4()
     }, 300)
   }
 
@@ -176,7 +182,7 @@ function init() {
     }
   }
 
-  // ------------FOLLOW FUNCTION ------------
+  // ------------FOLLOW FUNCTION ENEMY 1 ------------
   function follow(){
     cells[enemy1Position].classList.remove('enemy1')
 
@@ -207,18 +213,9 @@ function init() {
     cells[enemy1Position].classList.add('enemy1')
   }
 
-  //------ ENEMY 2 -------
+  //----------------- ENEMY 2 ----------------
 
-    
-  function startTimer2(){
-    setInterval(()=>{ 
-      // if class of enemy is afraid
-      // flee function, else
-      follow2()
-    }, 300)
-  }
-
-  //--- RANDOM MOVEMENT ENEMY 2 -- 
+  //---------- RANDOM MOVEMENT ENEMY 2 ---------------
 
   function moveRandom2 (){ 
     cells[enemy2Position].classList.remove('enemy2')
@@ -251,7 +248,7 @@ function init() {
     }
   }
 
-  // ------------FOLLOW FUNCTION ------------
+  // ------------FOLLOW FUNCTION ENEMY 2------------
   function follow2(){
     cells[enemy2Position].classList.remove('enemy2')
 
@@ -282,6 +279,135 @@ function init() {
     cells[enemy2Position].classList.add('enemy2')
   }
 
+   //----------------- ENEMY 3 ------------------ 
+  // ------- random movement enemy 3 ------------
+
+  function moveRandom3 (){ 
+    cells[enemy3Position].classList.remove('enemy3')
+    //declare variables needed for measurements
+    const x = enemy3Position % width
+    const y = Math.floor(enemy3Position / width)
+    //create random number to choose path to come
+    const randomDirection = Math.floor(Math.random() * 4)
+
+    if (randomDirection === 0){
+      if (x < width - 1 && !cells[enemy3Position - width].classList.contains('maze'))
+      {enemy3Position = enemy3Position - width
+      } 
+      cells[enemy3Position].classList.add('enemy3')
+    }   else if (randomDirection === 1){
+      if (x > 0 && !cells[enemy3Position - 1].classList.contains('maze')) {
+        enemy3Position = enemy3Position - 1 
+      } 
+      cells[enemy3Position].classList.add('enemy3')
+    }   else if (randomDirection === 2) {
+      if (y < width - 1  && !cells[enemy3Position + width].classList.contains('maze')) {
+        enemy3Position = enemy3Position + width
+      } 
+      cells[enemy3Position].classList.add('enemy3')
+    }   else if (randomDirection === 3){
+      if (x < width - 1 && !cells[enemy3Position + 1].classList.contains('maze')){ 
+        enemy3Position = enemy3Position + 1
+      } 
+      cells[enemy3Position].classList.add('enemy3')
+    }
+  }
+
+  // ------------FOLLOW FUNCTION ENEMY 3------------
+  function follow3(){
+    cells[enemy3Position].classList.remove('enemy3')
+
+    const x = enemy3Position % width
+    const y = Math.floor(enemy3Position / width)
+
+    if (playerPosition > enemy3Position && playerPosition - enemy3Position < width)  {
+      if (x < width - 1 && !cells[enemy3Position + 1].classList.contains('maze')){ 
+        enemy3Position = enemy3Position + 1
+        cells[enemy3Position].classList.add('enemy3')
+      } else moveRandom3()
+    }   else if (playerPosition > enemy3Position){
+      if (y < width - 1  && !cells[enemy3Position + width].classList.contains('maze')) {
+        enemy3Position = enemy3Position + width
+        cells[enemy3Position].classList.add('enemy3')
+      } else moveRandom3()
+    }   else if (playerPosition < enemy3Position && enemy3Position - playerPosition < width) {
+      if (x > 0 && !cells[enemy3Position - 1].classList.contains('maze')) {
+        enemy3Position = enemy3Position - 1 
+      } else moveRandom3()
+      cells[enemy3Position].classList.add('enemy3')
+    }   else if (playerPosition < enemy3Position)  {
+      if (x < width - 1 && !cells[enemy3Position - width].classList.contains('maze'))
+      {enemy3Position = enemy3Position - width
+      } else moveRandom3()
+      cells[enemy3Position].classList.add('enemy3')
+    }
+    cells[enemy3Position].classList.add('enemy3')
+  }
+
+  //----------------- ENEMY 4 ------------------ 
+  // ------- random movement enemy 4 ------------
+
+  function moveRandom4 (){ 
+    cells[enemy4Position].classList.remove('enemy4')
+    //declare variables needed for measurements
+    const x = enemy4Position % width
+    const y = Math.floor(enemy4Position / width)
+    //create random number to choose path to come
+    const randomDirection = Math.floor(Math.random() * 4)
+
+    if (randomDirection === 0){
+      if (x < width - 1 && !cells[enemy4Position - width].classList.contains('maze'))
+      {enemy4Position = enemy4Position - width
+      } 
+      cells[enemy4Position].classList.add('enemy4')
+    }   else if (randomDirection === 1){
+      if (x > 0 && !cells[enemy3Position - 1].classList.contains('maze')) {
+        enemy4Position = enemy4Position - 1 
+      } 
+      cells[enemy4Position].classList.add('enemy4')
+    }   else if (randomDirection === 2) {
+      if (y < width - 1  && !cells[enemy4Position + width].classList.contains('maze')) {
+        enemy4Position = enemy4Position + width
+      } 
+      cells[enemy4Position].classList.add('enemy4')
+    }   else if (randomDirection === 3){
+      if (x < width - 1 && !cells[enemy4Position + 1].classList.contains('maze')){ 
+        enemy4Position = enemy4Position + 1
+      } 
+      cells[enemy4Position].classList.add('enemy4')
+    }
+  }
+
+  // ------------FOLLOW FUNCTION ENEMY 4------------
+  function follow4(){
+    cells[enemy4Position].classList.remove('enemy4')
+
+    const x = enemy4Position % width
+    const y = Math.floor(enemy4Position / width)
+
+    if (playerPosition > enemy4Position && playerPosition - enemy4Position < width)  {
+      if (x < width - 1 && !cells[enemy4Position + 1].classList.contains('maze')){ 
+        enemy4Position = enemy4Position + 1
+        cells[enemy4Position].classList.add('enemy4')
+      } else moveRandom4()
+    }   else if (playerPosition > enemy4Position){
+      if (y < width - 1  && !cells[enemy4Position + width].classList.contains('maze')) {
+        enemy4Position = enemy4Position + width
+        cells[enemy4Position].classList.add('enemy4')
+      } else moveRandom4()
+    }   else if (playerPosition < enemy4Position && enemy4Position - playerPosition < width) {
+      if (x > 0 && !cells[enemy4Position - 1].classList.contains('maze')) {
+        enemy4Position = enemy4Position - 1 
+      } else moveRandom4()
+      cells[enemy4Position].classList.add('enemy4')
+    }   else if (playerPosition < enemy4Position)  {
+      if (x < width - 1 && !cells[enemy4Position - width].classList.contains('maze'))
+      {enemy4Position = enemy4Position - width
+      } else moveRandom4()
+      cells[enemy4Position].classList.add('enemy4')
+    }
+    cells[enemy4Position].classList.add('enemy4')
+  }
 
   //call the grid below so the cells exist
   createGrid(playerPosition)
