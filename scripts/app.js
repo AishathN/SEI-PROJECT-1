@@ -4,10 +4,7 @@ function init() {
   const cells = []
   const scoreboard = document.querySelector('#score')
   const startTheGame = document.querySelector('#STARTGAME')
-  const slate = document.getElementById('#wrap')
   let gametimer = null
-  
-  console.log(slate)
 
   // * grid variables
   const width = 25
@@ -248,6 +245,7 @@ function init() {
     if (cells[playerPosition].classList.contains('pokeBall')){
       cells[playerPosition].classList.remove('pokeBall')
       cells[playerPosition].classList.add('powerUp')
+      powerupAudio()
       poweredUp = true
       setTimeout(() => {
         cells[playerPosition].classList.remove('powerUp')
@@ -289,33 +287,31 @@ function init() {
     }
   }
 
-  // function clearboard(grid) {
-  //   grid.parentNode.removeChild(grid)
-  // }
 
   function endTheGame(){
     console.log("GAME OVER")
     clearInterval(gametimer)
     gameOver = true
     clearGrid()
-    //loop through all grid divs and class = (removes all other classes)
-    //this way scoring points no longer possible
-    //if remaining cookies variable = 0 
-    //add class WIN
-    //else add class game over
   }
 
-  // function clearboard() {
-    
-  // }
 
   function startGame(){
     gameOver = false
+    playerScore = 0
+    scoreboard.innerHTML = playerScore
     clearInterval(gametimer)
     createGrid(playerPosition)
+    cells[playerPosition].classList.add('sprite')
     createMaze()
     startTimer()
 
+  }
+
+  function powerupAudio() {
+    const powerAudio = new Audio('audio/Found Item.mp3')
+    powerAudio.play()
+    console.log('played')
   }
   //call the grid below so the cells exist
 
