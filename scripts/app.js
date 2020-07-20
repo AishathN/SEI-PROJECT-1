@@ -5,6 +5,7 @@ function init() {
   const scoreboard = document.querySelector('#score')
   const startTheGame = document.querySelector('#STARTGAME')
   const slate = document.getElementById('#wrap')
+  let gametimer = null
   
   console.log(slate)
 
@@ -263,11 +264,12 @@ function init() {
   function startTimer(){
     if (gameOver) {
       console.log("game is over")
-      clearInterval()
+      clearInterval(gametimer)
     } else {
-      let gametimer = setInterval(()=>{ 
-        if (!gameOver)
+      gametimer = setInterval(()=>{ 
+        if (!gameOver){
           moveEnemies()
+        }
       }, 300)
     }
   }
@@ -293,7 +295,7 @@ function init() {
 
   function endTheGame(){
     console.log("GAME OVER")
-    clearInterval()
+    clearInterval(gametimer)
     gameOver = true
     clearGrid()
     //loop through all grid divs and class = (removes all other classes)
@@ -309,8 +311,7 @@ function init() {
 
   function startGame(){
     gameOver = false
-    clearInterval()
-    clearInterval()
+    clearInterval(gametimer)
     createGrid(playerPosition)
     createMaze()
     startTimer()
