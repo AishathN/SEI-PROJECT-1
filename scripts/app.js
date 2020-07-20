@@ -4,7 +4,9 @@ function init() {
   const cells = []
   const scoreboard = document.querySelector('#score')
   const startTheGame = document.querySelector('#STARTGAME')
-  let gameOver = false
+  const slate = document.getElementById('#wrap')
+  
+  console.log(slate)
 
   // * grid variables
   const width = 25
@@ -50,10 +52,10 @@ function init() {
     follow(){
       cells[this.position].classList.remove(this.classname)
       cells[this.position].classList.remove(this.scaredclass)
-  
+      
       const x = this.position % width
       const y = Math.floor(this.position / width)
-  
+      this.deathOfEither()
       if (playerPosition > this.position && playerPosition - this.position < width)  {
         if (x < width - 1 && !cells[this.position + 1].classList.contains('maze')){ 
           this.position = this.position + 1
@@ -73,10 +75,20 @@ function init() {
       }
       cells[this.position].classList.add(this.classname)
     }
+
+    deathOfEither(){
+      if (playerPosition === this.position && !cells[playerPosition].classList.contains('powerUp')){
+        endTheGame()
+      } else if (playerPosition === this.position && cells[playerPosition].classList.contains('powerUp')){
+        this.position = 337
+        playerScore += 5000
+      }
+
+    }
   
     flee(){
       cells[this.position].classList.remove(this.classname)
-  
+      this.deathOfEither()
       const x = this.position % width
       const y = Math.floor(this.position / width)
   
@@ -112,10 +124,12 @@ function init() {
   let playerScore = 0
   let cookiesRemaining = 212
   enemyA.position = 337
-  enemyB.position = 337
-  enemyC.position = 337
-  enemyD.position = 337
+  enemyB.position = 335
+  enemyC.position = 339
+  enemyD.position = 338
   let poweredUp = false
+  let gameOver = false
+  
 
   //------ GRID CREATION AND PLAYER/ENEMY RESET FUNCTION -------------
   function createGrid(startingPosition) {
@@ -187,7 +201,7 @@ function init() {
     const x = playerPosition % width
     const y = Math.floor(playerPosition / width)
     //finding the solution below was more painful and arduous than I care to admit.
-    if (event.keyCode === 39 || event.keyCode === 68) {
+    if (event.keyCode === 39 || event.keyCode === 68 ) {
       if (x < width - 1 && !cells[playerPosition + 1].classList.contains('maze')){
         playerPosition = playerPosition + 1 
       }
@@ -217,6 +231,8 @@ function init() {
       cookiesRemaining -= 1
       if (cookiesRemaining === 0){
         console.log('YOU WIN')
+        //generate winners class for entire grid
+        //redraw grid for it
         gameOver = true
       }
       scoreboard.innerHTML = playerScore
@@ -239,10 +255,10 @@ function init() {
       console.log("game is over")
       clearInterval()
     } else {
-      setInterval(()=>{ 
+      let gametimer = setInterval(()=>{ 
         if (!gameOver)
           moveEnemies()
-      }, 250)
+      }, 300)
     }
   }
 
@@ -260,6 +276,32 @@ function init() {
       // console.log("powered up")
     }
   }
+
+  // function clearboard(grid) {
+  //   grid.parentNode.removeChild(grid)
+  // }
+
+  function endTheGame(){
+    console.log("this is endthegame")
+    gameOver = true
+    //loop through all grid divs and class = (removes all other classes)
+    //this way scoring points no longer possible
+    //if remaining cookies variable = 0 
+    //add class WIN
+    //else add class game over
+  }
+
+  // function clearboard() {
+    
+  // }
+
+  function startGame(){
+    gameOver = false
+    createGrid(playerPosition)
+    createMaze()
+    startTimer()
+
+  }
   //call the grid below so the cells exist
 
   createGrid(playerPosition)
@@ -272,7 +314,7 @@ function init() {
 
   //checking for player input
   document.addEventListener('keyup', handleKeyUp)
-  // startTheGame.addEventListener('click', startGame)
+  startTheGame.addEventListener('click', startGame)
 }
 
 window.addEventListener('DOMContentLoaded', init)
