@@ -124,10 +124,7 @@ function init() {
   let playerPosition = 0
   let playerScore = 0
   let cookiesRemaining = 212
-  enemyA.position = 337
-  enemyB.position = 335
-  enemyC.position = 339
-  enemyD.position = 338
+
   let poweredUp = false
   let gameOver = false
   
@@ -148,13 +145,13 @@ function init() {
     playerPosition = 487
     cells[playerPosition].classList.add('sprite')
     enemyA.position = 337
-    cells[startingPosition + 337].classList.add('enemy1')
+    cells[enemyA.position].classList.add('enemy1')
     enemyB.position = 335
-    cells[startingPosition + 335].classList.add('enemy2')
+    cells[enemyB.position].classList.add('enemy2')
     enemyC.position = 339
-    cells[startingPosition + 339].classList.add('enemy3')
+    cells[enemyC.position].classList.add('enemy3')
     enemyD.position = 338
-    cells[startingPosition + 338].classList.add('enemy4')
+    cells[enemyD.position].classList.add('enemy4')
 
   }
 
@@ -288,7 +285,10 @@ function init() {
       // console.log("powered up")
     }
   }
-
+  // enemyA.position = 337
+  // enemyB.position = 335
+  // enemyC.position = 339
+  // enemyD.position = 338
 
   function endTheGame(){
     gameoverAudio()
@@ -296,23 +296,60 @@ function init() {
     clearInterval(gametimer)
     gameOver = true
     clearGrid()
+    // removeChild()
     //THE GRID DIVS need to go, 
   }
 
+  function removeChild(){
+    while (grid.hasChildNodes()) {
+      grid.removeChild(grid.lastChild)
+  }
+  }
 
   function startGame(){
+    clearInterval(gametimer)
     gameOver = false
     playerScore = 0
     scoreboard.innerHTML = playerScore
-    clearInterval(gametimer)
     createGrid(playerPosition)
     createMaze()
     startTimer()
     cookiesRemaining = 212
     console.log(cookiesRemaining)
-    
+
 
   }
+
+  function resetGame(){
+
+    // endTheGame()
+    // clearGrid()
+    cells[enemyA.position].classList.remove('enemy1')
+    cells[enemyB.position].classList.remove('enemy2')
+    cells[enemyC.position].classList.remove('enemy3')
+    cells[enemyD.position].classList.remove('enemy4')
+    clearInterval(gametimer)
+    gameOver = false
+    playerScore = 0
+    scoreboard.innerHTML = playerScore
+    createMaze()
+    startTimer()
+    cookiesRemaining = 212
+    console.log(cookiesRemaining)
+    playerPosition = 487
+    cells[playerPosition].classList.add('sprite')
+    enemyA.position = 337
+    cells[enemyA.position].classList.add('enemy1')
+    enemyB.position = 335
+    cells[enemyB.position].classList.add('enemy2')
+    enemyC.position = 339
+    cells[enemyC.position].classList.add('enemy3')
+    enemyD.position = 338
+    cells[enemyD.position].classList.add('enemy4')
+
+  }
+
+  
 
   function powerupAudio() {
     const powerAudio = new Audio('audio/FoundItem.mp3')
@@ -332,7 +369,9 @@ function init() {
 
   //checking for player input
   document.addEventListener('keyup', handleKeyUp)
-  startTheGame.addEventListener('click', startGame)
+  startTheGame.addEventListener('click', resetGame)
+
+  startGame()
 }
 
 window.addEventListener('DOMContentLoaded', init)
