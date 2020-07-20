@@ -3,13 +3,14 @@ function init() {
   const grid = document.querySelector('.grid')
   const cells = []
   const scoreboard = document.querySelector('#score')
+  const startTheGame = document.querySelector('#STARTGAME')
+  let gameOver = false
 
   // * grid variables
   const width = 25
   const cellCount = width * width
   
   //game objects
-  // --------------------EVERYTHING HERE IS TEST --------------
 
   class enemy {
     constructor(name, classname , scaredclassname, position) {
@@ -18,12 +19,8 @@ function init() {
       this.scaredclass = scaredclassname
       this.position = position
     }
-    introduce() {
-      console.log(`Hi my name is ${this.name} from ${this.position}`)
-    }
 
     moveRandom(){ 
-      console.log("this is random")
       cells[this.position].classList.remove(this.classname)
       //declare variables needed for measurements
       const x = this.position % width
@@ -50,9 +47,7 @@ function init() {
       } cells[this.position].classList.add(this.classname)
     }
   
-    // ------------FOLLOW FUNCTION ENEMY 1 ------------
     follow(){
-      console.log("this is follow")
       cells[this.position].classList.remove(this.classname)
       cells[this.position].classList.remove(this.scaredclass)
   
@@ -80,7 +75,6 @@ function init() {
     }
   
     flee(){
-      console.log("this is flee")
       cells[this.position].classList.remove(this.classname)
   
       const x = this.position % width
@@ -108,32 +102,18 @@ function init() {
   }
 
   const enemyA = new enemy('enemy1', 'enemy1', 'scaredenemy1', 337)
-
   const enemyB = new enemy('enemy2', 'enemy2', 'scaredenemy2', 338)
-
   const enemyC = new enemy('enemy3', 'enemy3', 'scaredenemy3', 339)
-
   const enemyD = new enemy('enemy4', 'enemy4', 'scaredenemy4', 335)
-  // enemyA.introduce()
-  console.log(enemyA)
-  console.log(enemyB)
-  console.log(enemyC)
-  console.log(enemyD)
-
-
-//------------- END TESTS -----------------------
+  
 
   // * game variables
   let playerPosition = 0
   let playerScore = 0
   let cookiesRemaining = 212
-  // let enemy1Position = 337
   enemyA.position = 337
-  // let enemy2Position = 0
   enemyB.position = 337
-  // let enemy3Position = 0
   enemyC.position = 337
-  // let enemy4Position = 0
   enemyD.position = 337
   let poweredUp = false
 
@@ -141,7 +121,6 @@ function init() {
   function createGrid(startingPosition) {
     for (let i = 0; i < cellCount; i++) {
       const cell = document.createElement('div')
-      // cell.textContent = i
       grid.appendChild(cell)
       cells.push(cell)
     }
@@ -201,9 +180,6 @@ function init() {
   // ---------------PLAYER MOVE WITH MAZE COLLISION DETECTION FUNCTION ---------------
 
   function handleKeyUp(event) {
-    // sprite removal to simulate movement
-    // cells[playerPosition].classList.remove('sprite')
-    // cells[playerPosition].classList.remove('poweredUp')
     cells[playerPosition].classList.remove('sprite') 
     cells[playerPosition].classList.remove('powerUp') 
     
@@ -241,6 +217,7 @@ function init() {
       cookiesRemaining -= 1
       if (cookiesRemaining === 0){
         console.log('YOU WIN')
+        gameOver = true
       }
       scoreboard.innerHTML = playerScore
     }
@@ -256,10 +233,17 @@ function init() {
 
   //---------- ENEMY TIMER --------
   //TO DO set up a start game button to trigger this function
+  // hook up start button to game reset but NOT browser refresh
   function startTimer(){
-    setInterval(()=>{ 
-      moveEnemies()
-    }, 250)
+    if (gameOver) {
+      console.log("game is over")
+      clearInterval()
+    } else {
+      setInterval(()=>{ 
+        if (!gameOver)
+          moveEnemies()
+      }, 250)
+    }
   }
 
   function moveEnemies(){
@@ -277,17 +261,18 @@ function init() {
     }
   }
   //call the grid below so the cells exist
+
   createGrid(playerPosition)
-  // call maze
+
   createMaze()
-
-
-  
-  //start enemy timer
   startTimer()
+
   
   // * Event listeners
+
+  //checking for player input
   document.addEventListener('keyup', handleKeyUp)
+  // startTheGame.addEventListener('click', startGame)
 }
 
 window.addEventListener('DOMContentLoaded', init)
