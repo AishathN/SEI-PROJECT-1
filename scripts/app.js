@@ -308,6 +308,8 @@ function init() {
     createGrid(playerPosition)
     createMaze()
     startTimer()
+    cookiesRemaining = 212
+    console.log(cookiesRemaining)
     
 
   }
@@ -315,14 +317,12 @@ function init() {
   function powerupAudio() {
     const powerAudio = new Audio('audio/FoundItem.mp3')
     powerAudio.play()
-    console.log('played')
   }
   
 
   function gameoverAudio() {
     const gamedeathAudio = new Audio('audio/bomb.wav')
     gamedeathAudio.play()
-    console.log('played')
   }
   //call the grid below so the cells exist
 
