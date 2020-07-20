@@ -289,6 +289,7 @@ function init() {
 
 
   function endTheGame(){
+    gameoverAudio()
     console.log("GAME OVER")
     clearInterval(gametimer)
     gameOver = true
@@ -309,8 +310,15 @@ function init() {
   }
 
   function powerupAudio() {
-    const powerAudio = new Audio('audio/Found Item.mp3')
+    const powerAudio = new Audio('audio/FoundItem.mp3')
     powerAudio.play()
+    console.log('played')
+  }
+  
+
+  function gameoverAudio() {
+    const gamedeathAudio = new Audio('audio/bomb.wav')
+    gamedeathAudio.play()
     console.log('played')
   }
   //call the grid below so the cells exist
