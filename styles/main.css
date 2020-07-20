@@ -98,6 +98,15 @@ body {
 
 }
 
+.scaredEnemy1 {
+  background-image: url('../images/koffing.gif');
+  background-blend-mode: color-dodge;
+  background-color: linen;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+}
+
 .enemy2{
   background-image: url('../images/ekans.gif');
   background-repeat: no-repeat;
@@ -123,7 +132,10 @@ body {
 }
 
 .powerUp{
-  /* border: 2px white solid; */
+  background-image: url('../images/lightningpikachu.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
  }
 
 .pokeBall{
