@@ -22,7 +22,8 @@ function init() {
       this.position = position
     }
 
-    moveRandom(){ 
+    moveRandom(){
+      
       cells[this.position].classList.remove(this.classname)
       //declare variables needed for measurements
       const x = this.position % width
@@ -46,7 +47,7 @@ function init() {
         if (x < width - 1 && !cells[this.position + 1].classList.contains('maze')){ 
           this.position = this.position + 1
         } 
-      } cells[this.position].classList.add(this.classname)
+      } if (!gameOver){cells[this.position].classList.add(this.classname)}
     }
   
     follow(){
@@ -73,12 +74,13 @@ function init() {
         {this.position = this.position - width
         } else this.moveRandom()
       }
-      cells[this.position].classList.add(this.classname)
+      if (!gameOver){cells[this.position].classList.add(this.classname)}
     }
 
     deathOfEither(){
       if (playerPosition === this.position && !cells[playerPosition].classList.contains('powerUp')){
         endTheGame()
+        clearGrid()
       } else if (playerPosition === this.position && cells[playerPosition].classList.contains('powerUp')){
         this.position = 337
         playerScore += 5000
@@ -109,7 +111,7 @@ function init() {
         {this.position = this.position + width
         } else this.moveRandom()
       }
-      cells[this.position].classList.add(this.classname)
+      if (!gameOver){cells[this.position].classList.add(this.classname)}
     }
   }
 
@@ -130,6 +132,11 @@ function init() {
   let poweredUp = false
   let gameOver = false
   
+  function clearGrid (){
+    for (let i = 0; i < 625; i++){
+      cells[i].classList = null
+    }
+  }
 
   //------ GRID CREATION AND PLAYER/ENEMY RESET FUNCTION -------------
   function createGrid(startingPosition) {
@@ -193,7 +200,7 @@ function init() {
   }
   // ---------------PLAYER MOVE WITH MAZE COLLISION DETECTION FUNCTION ---------------
 
-  function handleKeyUp(event) {
+  function handleKeyUp(event) {if (!gameOver) {{
     cells[playerPosition].classList.remove('sprite') 
     cells[playerPosition].classList.remove('powerUp') 
     
@@ -244,7 +251,10 @@ function init() {
       setTimeout(() => {
         cells[playerPosition].classList.remove('powerUp')
         poweredUp = false
-      }, 5000)}
+      }, 5000)
+    }
+  }
+  }
   }
 
   //---------- ENEMY TIMER --------
@@ -282,8 +292,10 @@ function init() {
   // }
 
   function endTheGame(){
-    console.log("this is endthegame")
+    console.log("GAME OVER")
+    clearInterval()
     gameOver = true
+    clearGrid()
     //loop through all grid divs and class = (removes all other classes)
     //this way scoring points no longer possible
     //if remaining cookies variable = 0 
@@ -297,6 +309,8 @@ function init() {
 
   function startGame(){
     gameOver = false
+    clearInterval()
+    clearInterval()
     createGrid(playerPosition)
     createMaze()
     startTimer()
@@ -304,11 +318,7 @@ function init() {
   }
   //call the grid below so the cells exist
 
-  createGrid(playerPosition)
-
-  createMaze()
-  startTimer()
-
+  startGame()
   
   // * Event listeners
 
