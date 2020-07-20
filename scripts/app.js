@@ -30,6 +30,7 @@ function init() {
       const randomDirection = Math.floor(Math.random() * 4)
   
       if (randomDirection === 0){
+        this.deathOfEither()
         if (x < width - 1 && !cells[this.position - width].classList.contains('maze'))
         {this.position = this.position - width
         } 
@@ -143,8 +144,9 @@ function init() {
       grid.appendChild(cell)
       cells.push(cell)
     }
-    cells[startingPosition + 487].classList.add('sprite')
+    
     playerPosition = 487
+    cells[playerPosition].classList.add('sprite')
     enemyA.position = 337
     cells[startingPosition + 337].classList.add('enemy1')
     enemyB.position = 335
@@ -294,6 +296,7 @@ function init() {
     clearInterval(gametimer)
     gameOver = true
     clearGrid()
+    //THE GRID DIVS need to go, 
   }
 
 
@@ -303,9 +306,9 @@ function init() {
     scoreboard.innerHTML = playerScore
     clearInterval(gametimer)
     createGrid(playerPosition)
-    cells[playerPosition].classList.add('sprite')
     createMaze()
     startTimer()
+    
 
   }
 
@@ -323,7 +326,7 @@ function init() {
   }
   //call the grid below so the cells exist
 
-  startGame()
+  // startGame()
   
   // * Event listeners
 
