@@ -7,22 +7,135 @@ function init() {
   // * grid variables
   const width = 25
   const cellCount = width * width
-
+  
   //game objects
-  // To do : build enemy objects 
-  // build functions shared by them
-  // const enemy1 = {}
+  // --------------------EVERYTHING HERE IS TEST --------------
+
+  class enemy {
+    constructor(name, classname , scaredclassname, position) {
+      this.name = name
+      this.classname = classname
+      this.scaredclass = scaredclassname
+      this.position = position
+    }
+    introduce() {
+      console.log(`Hi my name is ${this.name} from ${this.position}`)
+    }
+
+    moveRandom(){ 
+      console.log("this is random")
+      cells[this.position].classList.remove(this.classname)
+      //declare variables needed for measurements
+      const x = this.position % width
+      const y = Math.floor(this.position / width)
+      //create random number to choose path to come
+      const randomDirection = Math.floor(Math.random() * 4)
+  
+      if (randomDirection === 0){
+        if (x < width - 1 && !cells[this.position - width].classList.contains('maze'))
+        {this.position = this.position - width
+        } 
+      }   else if (randomDirection === 1){
+        if (x > 0 && !cells[this.position - 1].classList.contains('maze')) {
+          this.position = this.position - 1 
+        } 
+      }   else if (randomDirection === 2) {
+        if (y < width - 1  && !cells[this.position + width].classList.contains('maze')) {
+          this.position = this.position + width
+        } 
+      }   else if (randomDirection === 3){
+        if (x < width - 1 && !cells[this.position + 1].classList.contains('maze')){ 
+          this.position = this.position + 1
+        } 
+      } cells[this.position].classList.add(this.classname)
+    }
+  
+    // ------------FOLLOW FUNCTION ENEMY 1 ------------
+    follow(){
+      console.log("this is follow")
+      cells[this.position].classList.remove(this.classname)
+      cells[this.position].classList.remove(this.scaredclass)
+  
+      const x = this.position % width
+      const y = Math.floor(this.position / width)
+  
+      if (playerPosition > this.position && playerPosition - this.position < width)  {
+        if (x < width - 1 && !cells[this.position + 1].classList.contains('maze')){ 
+          this.position = this.position + 1
+        } else this.moveRandom()
+      }   else if (playerPosition > this.position){
+        if (y < width - 1  && !cells[this.position + width].classList.contains('maze')) {
+          this.position = this.position + width
+        } else this.moveRandom()
+      }   else if (playerPosition < this.position && this.position - playerPosition < width) {
+        if (x > 0 && !cells[this.position - 1].classList.contains('maze')) {
+          this.position = this.position - 1 
+        } else this.moveRandom()
+      }   else if (playerPosition < this.position)  {
+        if (x < width - 1 && !cells[this.position - width].classList.contains('maze'))
+        {this.position = this.position - width
+        } else this.moveRandom()
+      }
+      cells[this.position].classList.add(this.classname)
+    }
+  
+    flee(){
+      console.log("this is flee")
+      cells[this.position].classList.remove(this.classname)
+  
+      const x = this.position % width
+      const y = Math.floor(this.position / width)
+  
+      if (playerPosition > this.position && playerPosition - this.position < width)  {
+        if (x < width - 1 && !cells[this.position - 1].classList.contains('maze')){ 
+          this.position = this.position - 1
+        } else this.moveRandom()
+      }   else if (playerPosition > this.position){
+        if (y < width - 1  && !cells[this.position - width].classList.contains('maze')) {
+          this.position = this.position - width
+        } else this.moveRandom()
+      }   else if (playerPosition < this.position && this.position - playerPosition < width) {
+        if (x > 0 && !cells[this.position + 1].classList.contains('maze')) {
+          this.position = this.position + 1 
+        } else this.moveRandom()
+      }   else if (playerPosition < this.position)  {
+        if (x < width - 1 && !cells[this.position + width].classList.contains('maze'))
+        {this.position = this.position + width
+        } else this.moveRandom()
+      }
+      cells[this.position].classList.add(this.classname)
+    }
+  }
+
+  const enemyA = new enemy('enemy1', 'enemy1', 'scaredenemy1', 337)
+
+  const enemyB = new enemy('enemy2', 'enemy2', 'scaredenemy2', 338)
+
+  const enemyC = new enemy('enemy3', 'enemy3', 'scaredenemy3', 339)
+
+  const enemyD = new enemy('enemy4', 'enemy4', 'scaredenemy4', 335)
+  // enemyA.introduce()
+  console.log(enemyA)
+  console.log(enemyB)
+  console.log(enemyC)
+  console.log(enemyD)
+
+
+//------------- END TESTS -----------------------
 
   // * game variables
   let playerPosition = 0
   let playerScore = 0
   let cookiesRemaining = 212
-  let enemy1Position = 0
-  let enemy2Position = 0
-  let enemy3Position = 0
-  let enemy4Position = 0
+  // let enemy1Position = 337
+  enemyA.position = 337
+  // let enemy2Position = 0
+  enemyB.position = 337
+  // let enemy3Position = 0
+  enemyC.position = 337
+  // let enemy4Position = 0
+  enemyD.position = 337
   let poweredUp = false
-
 
   //------ GRID CREATION AND PLAYER/ENEMY RESET FUNCTION -------------
   function createGrid(startingPosition) {
@@ -34,13 +147,13 @@ function init() {
     }
     cells[startingPosition + 487].classList.add('sprite')
     playerPosition = 487
-    enemy1Position = 337
+    enemyA.position = 337
     cells[startingPosition + 337].classList.add('enemy1')
-    enemy2Position = 335
+    enemyB.position = 335
     cells[startingPosition + 335].classList.add('enemy2')
-    enemy3Position = 339
+    enemyC.position = 339
     cells[startingPosition + 339].classList.add('enemy3')
-    enemy4Position = 338
+    enemyD.position = 338
     cells[startingPosition + 338].classList.add('enemy4')
 
   }
@@ -99,7 +212,7 @@ function init() {
     const y = Math.floor(playerPosition / width)
     //finding the solution below was more painful and arduous than I care to admit.
     if (event.keyCode === 39 || event.keyCode === 68) {
-      if (x < width - 1 && !cells[playerPosition + 1].classList.contains('maze')){ //<-- preliminary avoidance tests
+      if (x < width - 1 && !cells[playerPosition + 1].classList.contains('maze')){
         playerPosition = playerPosition + 1 
       }
     } else if (event.keyCode === 37 || event.keyCode === 65) {
@@ -151,361 +264,27 @@ function init() {
 
   function moveEnemies(){
     if (poweredUp === false){
-      follow()
-      follow2()
-      follow3()
-      follow4()
+      enemyA.follow()
+      enemyB.follow()
+      enemyC.follow()
+      enemyD.follow()
     } else if (poweredUp === true){
-      fleeEnemy1()
-      fleeEnemy2()
-      fleeEnemy3()
-      fleeEnemy4()
-      console.log("powered up")
+      enemyA.flee()
+      enemyB.flee()
+      enemyC.flee()
+      enemyD.flee()
+      // console.log("powered up")
     }
   }
-  //--- RANDOM MOVEMENT ENEMY 1 -- 
-
-  function moveRandom (){ 
-    cells[enemy1Position].classList.remove('enemy1')
-    //declare variables needed for measurements
-    const x = enemy1Position % width
-    const y = Math.floor(enemy1Position / width)
-    //create random number to choose path to come
-    const randomDirection = Math.floor(Math.random() * 4)
-
-    if (randomDirection === 0){
-      if (x < width - 1 && !cells[enemy1Position - width].classList.contains('maze'))
-      {enemy1Position = enemy1Position - width
-      } 
-    }   else if (randomDirection === 1){
-      if (x > 0 && !cells[enemy1Position - 1].classList.contains('maze')) {
-        enemy1Position = enemy1Position - 1 
-      } 
-    }   else if (randomDirection === 2) {
-      if (y < width - 1  && !cells[enemy1Position + width].classList.contains('maze')) {
-        enemy1Position = enemy1Position + width
-      } 
-    }   else if (randomDirection === 3){
-      if (x < width - 1 && !cells[enemy1Position + 1].classList.contains('maze')){ 
-        enemy1Position = enemy1Position + 1
-      } 
-    } cells[enemy1Position].classList.add('enemy1')
-  }
-
-  // ------------FOLLOW FUNCTION ENEMY 1 ------------
-  function follow(){
-    cells[enemy1Position].classList.remove('enemy1')
-    cells[enemy1Position].classList.remove('scaredEnemy1')
-
-    const x = enemy1Position % width
-    const y = Math.floor(enemy1Position / width)
-
-    if (playerPosition > enemy1Position && playerPosition - enemy1Position < width)  {
-      if (x < width - 1 && !cells[enemy1Position + 1].classList.contains('maze')){ 
-        enemy1Position = enemy1Position + 1
-      } else moveRandom()
-    }   else if (playerPosition > enemy1Position){
-      if (y < width - 1  && !cells[enemy1Position + width].classList.contains('maze')) {
-        enemy1Position = enemy1Position + width
-      } else moveRandom()
-    }   else if (playerPosition < enemy1Position && enemy1Position - playerPosition < width) {
-      if (x > 0 && !cells[enemy1Position - 1].classList.contains('maze')) {
-        enemy1Position = enemy1Position - 1 
-      } else moveRandom()
-    }   else if (playerPosition < enemy1Position)  {
-      if (x < width - 1 && !cells[enemy1Position - width].classList.contains('maze'))
-      {enemy1Position = enemy1Position - width
-      } else moveRandom()
-    }
-    cells[enemy1Position].classList.add('enemy1')
-  }
-
-  function fleeEnemy1(){
-    cells[enemy1Position].classList.remove('enemy1')
-
-    const x = enemy1Position % width
-    const y = Math.floor(enemy1Position / width)
-
-    if (playerPosition > enemy1Position && playerPosition - enemy1Position < width)  {
-      if (x < width - 1 && !cells[enemy1Position - 1].classList.contains('maze')){ 
-        enemy1Position = enemy1Position - 1
-      } else moveRandom()
-    }   else if (playerPosition > enemy1Position){
-      if (y < width - 1  && !cells[enemy1Position - width].classList.contains('maze')) {
-        enemy1Position = enemy1Position - width
-      } else moveRandom()
-    }   else if (playerPosition < enemy1Position && enemy1Position - playerPosition < width) {
-      if (x > 0 && !cells[enemy1Position + 1].classList.contains('maze')) {
-        enemy1Position = enemy1Position + 1 
-      } else moveRandom()
-    }   else if (playerPosition < enemy1Position)  {
-      if (x < width - 1 && !cells[enemy1Position + width].classList.contains('maze'))
-      {enemy1Position = enemy1Position + width
-      } else moveRandom()
-    }
-    cells[enemy1Position].classList.add('enemy1')
-  }
-
-  //----------------- ENEMY 2 ----------------
-
-  //---------- RANDOM MOVEMENT ENEMY 2 ---------------
-
-  function moveRandom2 (){ 
-    cells[enemy2Position].classList.remove('enemy2')
-    //declare variables needed for measurements
-    const x = enemy2Position % width
-    const y = Math.floor(enemy2Position / width)
-    //create random number to choose path to come
-    const randomDirection = Math.floor(Math.random() * 4)
-
-    if (randomDirection === 0){
-      if (x < width - 1 && !cells[enemy2Position - width].classList.contains('maze'))
-      {enemy2Position = enemy2Position - width
-      } 
-    }   else if (randomDirection === 1){
-      if (x > 0 && !cells[enemy2Position - 1].classList.contains('maze')) {
-        enemy2Position = enemy2Position - 1 
-      } 
-    }   else if (randomDirection === 2) {
-      if (y < width - 1  && !cells[enemy2Position + width].classList.contains('maze')) {
-        enemy2Position = enemy2Position + width
-      } 
-    }   else if (randomDirection === 3){
-      if (x < width - 1 && !cells[enemy2Position + 1].classList.contains('maze')){ 
-        enemy2Position = enemy2Position + 1
-      } 
-    }
-    cells[enemy2Position].classList.add('enemy2')
-  }
-
-  // ------------FOLLOW FUNCTION ENEMY 2------------
-  function follow2(){
-    cells[enemy2Position].classList.remove('enemy2')
-
-    const x = enemy2Position % width
-    const y = Math.floor(enemy2Position / width)
-
-    if (playerPosition > enemy2Position && playerPosition - enemy2Position < width)  {
-      if (x < width - 1 && !cells[enemy2Position + 1].classList.contains('maze')){ 
-        enemy2Position = enemy2Position + 1
-      } else moveRandom2()
-    }   else if (playerPosition > enemy2Position){
-      if (y < width - 1  && !cells[enemy2Position + width].classList.contains('maze')) {
-        enemy2Position = enemy2Position + width
-      } else moveRandom2()
-    }   else if (playerPosition < enemy2Position && enemy2Position - playerPosition < width) {
-      if (x > 0 && !cells[enemy2Position - 1].classList.contains('maze')) {
-        enemy2Position = enemy2Position - 1 
-      } else moveRandom2()
-    }   else if (playerPosition < enemy2Position)  {
-      if (x < width - 1 && !cells[enemy2Position - width].classList.contains('maze'))
-      {enemy2Position = enemy2Position - width
-      } else moveRandom2()
-    }
-    cells[enemy2Position].classList.add('enemy2')
-  }
-
-  function fleeEnemy2(){
-    cells[enemy2Position].classList.remove('enemy2')
-
-    const x = enemy2Position % width
-    const y = Math.floor(enemy2Position / width)
-
-    if (playerPosition > enemy2Position && playerPosition - enemy2Position < width)  {
-      if (x < width - 1 && !cells[enemy2Position - 1].classList.contains('maze')){ 
-        enemy2Position = enemy2Position - 1
-      } else moveRandom2()
-    }   else if (playerPosition > enemy2Position){
-      if (y < width - 1  && !cells[enemy2Position - width].classList.contains('maze')) {
-        enemy2Position = enemy2Position - width
-      } else moveRandom2()
-    }   else if (playerPosition < enemy2Position && enemy2Position - playerPosition < width) {
-      if (x > 0 && !cells[enemy2Position + 1].classList.contains('maze')) {
-        enemy2Position = enemy2Position + 1 
-      } else moveRandom2()
-    }   else if (playerPosition < enemy2Position)  {
-      if (x < width - 1 && !cells[enemy2Position + width].classList.contains('maze'))
-      {enemy2Position = enemy2Position + width
-      } else moveRandom2()
-    }
-    cells[enemy2Position].classList.add('enemy2')
-  }
-
-   //----------------- ENEMY 3 ------------------ 
-  // ------- random movement enemy 3 ------------
-
-  function moveRandom3 (){ 
-    cells[enemy3Position].classList.remove('enemy3')
-    //declare variables needed for measurements
-    const x = enemy3Position % width
-    const y = Math.floor(enemy3Position / width)
-    //create random number to choose path to come
-    const randomDirection = Math.floor(Math.random() * 4)
-
-    if (randomDirection === 0){
-      if (x < width - 1 && !cells[enemy3Position - width].classList.contains('maze'))
-      {enemy3Position = enemy3Position - width
-      } 
-    }   else if (randomDirection === 1){
-      if (x > 0 && !cells[enemy3Position - 1].classList.contains('maze')) {
-        enemy3Position = enemy3Position - 1 
-      } 
-    }   else if (randomDirection === 2) {
-      if (y < width - 1  && !cells[enemy3Position + width].classList.contains('maze')) {
-        enemy3Position = enemy3Position + width
-      } 
-    }   else if (randomDirection === 3){
-      if (x < width - 1 && !cells[enemy3Position + 1].classList.contains('maze')){ 
-        enemy3Position = enemy3Position + 1
-      } 
-    }
-    cells[enemy3Position].classList.add('enemy3')
-  }
-
-  // ------------FOLLOW FUNCTION ENEMY 3------------
-  function follow3(){
-    cells[enemy3Position].classList.remove('enemy3')
-
-    const x = enemy3Position % width
-    const y = Math.floor(enemy3Position / width)
-
-    if (playerPosition > enemy3Position && playerPosition - enemy3Position < width)  {
-      if (x < width - 1 && !cells[enemy3Position + 1].classList.contains('maze')){ 
-        enemy3Position = enemy3Position + 1
-      } else moveRandom3()
-    }   else if (playerPosition > enemy3Position){
-      if (y < width - 1  && !cells[enemy3Position + width].classList.contains('maze')) {
-        enemy3Position = enemy3Position + width
-      } else moveRandom3()
-    }   else if (playerPosition < enemy3Position && enemy3Position - playerPosition < width) {
-      if (x > 0 && !cells[enemy3Position - 1].classList.contains('maze')) {
-        enemy3Position = enemy3Position - 1 
-      } else moveRandom3()
-    }   else if (playerPosition < enemy3Position)  {
-      if (x < width - 1 && !cells[enemy3Position - width].classList.contains('maze'))
-      {enemy3Position = enemy3Position - width
-      } else moveRandom3()
-    }
-    cells[enemy3Position].classList.add('enemy3')
-  }
-
-  function fleeEnemy3(){
-    cells[enemy3Position].classList.remove('enemy3')
-
-    const x = enemy3Position % width
-    const y = Math.floor(enemy3Position / width)
-
-    if (playerPosition > enemy3Position && playerPosition - enemy3Position < width)  {
-      if (x < width - 1 && !cells[enemy3Position - 1].classList.contains('maze')){ 
-        enemy3Position = enemy3Position - 1
-      } else moveRandom3()
-    }   else if (playerPosition > enemy3Position){
-      if (y < width - 1  && !cells[enemy3Position - width].classList.contains('maze')) {
-        enemy3Position = enemy3Position - width
-      } else moveRandom3()
-    }   else if (playerPosition < enemy3Position && enemy3Position - playerPosition < width) {
-      if (x > 0 && !cells[enemy3Position + 1].classList.contains('maze')) {
-        enemy3Position = enemy3Position + 1 
-      } else moveRandom3()
-    }   else if (playerPosition < enemy3Position)  {
-      if (x < width - 1 && !cells[enemy3Position + width].classList.contains('maze'))
-      {enemy3Position = enemy3Position + width
-      } else moveRandom3()
-    }
-    cells[enemy3Position].classList.add('enemy3')
-  }
-
-  //----------------- ENEMY 4 ------------------ 
-  // ------- random movement enemy 4 ------------
-
-  function moveRandom4 (){ 
-    cells[enemy4Position].classList.remove('enemy4')
-    //declare variables needed for measurements
-    const x = enemy4Position % width
-    const y = Math.floor(enemy4Position / width)
-    //create random number to choose path to come
-    const randomDirection = Math.floor(Math.random() * 4)
-
-    if (randomDirection === 0){
-      if (x < width - 1 && !cells[enemy4Position - width].classList.contains('maze'))
-      {enemy4Position = enemy4Position - width
-      } 
-    }   else if (randomDirection === 1){
-      if (x > 0 && !cells[enemy4Position - 1].classList.contains('maze')) {
-        enemy4Position = enemy4Position - 1 
-      } 
-    }   else if (randomDirection === 2) {
-      if (y < width - 1  && !cells[enemy4Position + width].classList.contains('maze')) {
-        enemy4Position = enemy4Position + width
-      } 
-    }   else if (randomDirection === 3){
-      if (x < width - 1 && !cells[enemy4Position + 1].classList.contains('maze')){ 
-        enemy4Position = enemy4Position + 1
-      } 
-    }
-    cells[enemy4Position].classList.add('enemy4')
-  }
-
-  // ------------FOLLOW FUNCTION ENEMY 4------------
-  function follow4(){
-    cells[enemy4Position].classList.remove('enemy4')
-
-    const x = enemy4Position % width
-    const y = Math.floor(enemy4Position / width)
-
-    if (playerPosition > enemy4Position && playerPosition - enemy4Position < width)  {
-      if (x < width - 1 && !cells[enemy4Position + 1].classList.contains('maze')){ 
-        enemy4Position = enemy4Position + 1
-      } else moveRandom4()
-    }   else if (playerPosition > enemy4Position){
-      if (y < width - 1  && !cells[enemy4Position + width].classList.contains('maze')) {
-        enemy4Position = enemy4Position + width
-      } else moveRandom4()
-    }   else if (playerPosition < enemy4Position && enemy4Position - playerPosition < width) {
-      if (x > 0 && !cells[enemy4Position - 1].classList.contains('maze')) {
-        enemy4Position = enemy4Position - 1 
-      } else moveRandom4()
-    }   else if (playerPosition < enemy4Position)  {
-      if (x < width - 1 && !cells[enemy4Position - width].classList.contains('maze'))
-      {enemy4Position = enemy4Position - width
-      } else moveRandom4()
-    }
-    cells[enemy4Position].classList.add('enemy4')
-  }
-
-  function fleeEnemy4(){
-    cells[enemy4Position].classList.remove('enemy4')
-
-    const x = enemy4Position % width
-    const y = Math.floor(enemy4Position / width)
-
-    if (playerPosition > enemy4Position && playerPosition - enemy4Position < width)  {
-      if (x < width - 1 && !cells[enemy4Position - 1].classList.contains('maze')){ 
-        enemy4Position = enemy4Position - 1
-      } else moveRandom4()
-    }   else if (playerPosition > enemy4Position){
-      if (y < width - 1  && !cells[enemy4Position - width].classList.contains('maze')) {
-        enemy4Position = enemy4Position - width
-      } else moveRandom4()
-    }   else if (playerPosition < enemy4Position && enemy4Position - playerPosition < width) {
-      if (x > 0 && !cells[enemy4Position + 1].classList.contains('maze')) {
-        enemy4Position = enemy4Position + 1 
-      } else moveRandom4()
-    }   else if (playerPosition < enemy4Position)  {
-      if (x < width - 1 && !cells[enemy4Position + width].classList.contains('maze'))
-      {enemy4Position = enemy4Position + width
-      } else moveRandom4()
-    }
-    cells[enemy4Position].classList.add('enemy4')
-  }
-
   //call the grid below so the cells exist
   createGrid(playerPosition)
   // call maze
   createMaze()
+
+
+  
   //start enemy timer
   startTimer()
-
   
   // * Event listeners
   document.addEventListener('keyup', handleKeyUp)
