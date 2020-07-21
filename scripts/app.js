@@ -13,7 +13,13 @@ function init() {
   gameOverScreen.width = '750px';
   gameOverScreen.height = '750px';
   const pikaSad = document.createElement('img')
-  const body = document.querySelector('body')
+  const pikaHappy = document.createElement('img')
+  // const body = document.querySelector('body')
+  const youWinScreen = document.createElement('div')
+  youWinScreen.id = 'youWinScreenID'
+  youWinScreen.width = '750px';
+  youWinScreen.height = '750px';
+  let win = false
   // localStorage.setItem( highScore)
   
 
@@ -95,6 +101,8 @@ function init() {
       if (playerPosition === this.position && !cells[playerPosition].classList.contains('powerUp')){
         endTheGame()
         clearGrid()
+        winOrLoseScreen()
+        win = false
       } else if (playerPosition === this.position && cells[playerPosition].classList.contains('powerUp')){
         this.position = 337
         playerScore += 5000
@@ -270,6 +278,8 @@ function init() {
       if (cookiesRemaining === 0){
         console.log('YOU WIN')
         checkHiScore()
+        youWinGraphic()
+        win = true
         highScore = localStorage.getItem('highscore')
         if (highScore > playerScore){
           highscoreboard.innerHTML = highScore
@@ -340,23 +350,20 @@ function init() {
   function endTheGame(){
     gameoverAudio()
     checkHiScore()
-    console.log('GAME OVER')
     clearInterval(gametimer)
     gameOver = true
     clearGrid()
     highScore = localStorage.getItem('highscore')
-    console.log('High score is ' + highScore)
     highscoreboard.innerHTML = highScore
-    GameOverGraphic()
   }
 
   function startGame(){
     clearInterval(gametimer)
+    win = null
     gameOver = false
     playerScore = 0
     scoreboard.innerHTML = playerScore
     highScore = localStorage.getItem('highscore')
-    console.log('High score is ' + highScore)
     highscoreboard.innerHTML = highScore
     createGrid(playerPosition)
     createMaze()
@@ -365,7 +372,10 @@ function init() {
     
   }
   function resetGame(){
-    clearGOScreen()
+    if (!win || win){
+      clearWinOrLoseScreen()
+    }
+    win = null
     cells[enemyA.position].classList.remove('enemy1')
     cells[enemyB.position].classList.remove('enemy2')
     cells[enemyC.position].classList.remove('enemy3')
@@ -389,9 +399,30 @@ function init() {
     cells[enemyD.position].classList.add('enemy4')
 
   }
+  
 
+  function winOrLoseScreen(){
+    if (!win){
+      GameOverGraphic()
+    } else {
+      youWinGraphic()
+      console.log("this is you win choice firing")
+    }
+  }
+
+  function clearWinOrLoseScreen(){
+    if (!win){
+      clearGOScreen()
+    } else {
+      clearWINScreen()
+    }
+  }
   function clearGOScreen(){
     wrap.removeChild(gameOverScreen)
+  }
+
+  function clearWINScreen(){
+    wrap.removeChild(youWinScreen)
   }
 
   function powerupAudio() {
@@ -417,13 +448,18 @@ function init() {
       localStorage.setItem('highscore', playerScore)
     } 
     highScore = localStorage.getItem('highscore')
-    console.log("High score is " + highScore)
     highscoreboard.innerHTML = highScore
   }
 
   function GameOverGraphic(){
     gameOverScreen.appendChild(pikaSad)
     wrap.appendChild(gameOverScreen)
+  }
+
+  function youWinGraphic(){
+    youWinScreen.appendChild(pikaHappy)
+    wrap.appendChild(youWinScreen)
+    console.log("you win graphic firing")
   }
 
   setTimeout(() => {
@@ -438,8 +474,9 @@ function init() {
 
   startGame()
   // ---code for music---
-  //const BGM = new Audio('audio/gymlobby.mp3');
-  // BGM.volume = 0.2;
+  // const BGM = new Audio('audio/gymlobby.mp3');
+  // BGM.volume = 0.2
+  // BGM.play()
 
 }
 
