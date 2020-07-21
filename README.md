@@ -14,16 +14,15 @@ Brief - Create a Pac-man game with the following minimum requirements:
 
 * Player can currently clear one board, complete.
 * Player's score is displayed in sidebar, complete.
-* Create a high score function, completed.
-* rather than ghosts running away, pokemon now hatch from an egg in the middle.
+* MVP complete other than debugging win/lose screen
 
 # Current TO DO list:
 
-* Bonus berries with associated timeout 
-* Game over graphic window over game panel
-* You win graphic window over game panel
+* BGM addition 
+* write conditional win/lose to govern game screen
 * Style the game interface 
 
 # OPTIONAL:
 
 * Different game board layout - just change outer maze, not inner maze
+* Bonus berries with associated timeout

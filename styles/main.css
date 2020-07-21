@@ -23,6 +23,10 @@ body {
   /* background-color: dimgray; */
 }
 
+.allblack{
+  background-color:darkslategrey;
+}
+
 .roundBtn{
   margin:35px;
   background-color: darkred;
@@ -155,10 +159,11 @@ body {
 
 #gameOverScreenID {
 align-self:center;
+justify-self: center;
 position:absolute;
-width:750px;
-height:338px;
-background-image: url('../images/pikachulargesad.jpg');
+width:700px;
+height:700px;
+background-image: url('../images/pikachumediumsad.jpg');
 background-color:black;
 background-repeat: no-repeat;
 background-size: cover;

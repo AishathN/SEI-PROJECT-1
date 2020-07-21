@@ -11,7 +11,7 @@ function init() {
   const gameOverScreen = document.createElement('div')
   gameOverScreen.id = 'gameOverScreenID'
   gameOverScreen.width = '750px';
-  gameOverScreen.height = '338px';
+  gameOverScreen.height = '750px';
   const pikaSad = document.createElement('img')
   const body = document.querySelector('body')
   // localStorage.setItem( highScore)
@@ -164,8 +164,10 @@ function init() {
   function clearGrid (){
     for (let i = 0; i < 625; i++){
       cells[i].classList = null
+      
     }
   }
+  
 
   //------ GRID CREATION AND PLAYER/ENEMY RESET FUNCTION -------------
   function createGrid(startingPosition) {
@@ -294,7 +296,6 @@ function init() {
 
   function startTimer(){
     if (gameOver) {
-      console.log("game is over")
       clearInterval(gametimer)
     } else {
       gametimer = setInterval(()=>{ 
@@ -436,7 +437,9 @@ function init() {
   startTheGame.addEventListener('click', resetGame)
 
   startGame()
-
+  // ---code for music---
+  //const BGM = new Audio('audio/gymlobby.mp3');
+  // BGM.volume = 0.2;
 
 }
 
