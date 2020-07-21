@@ -3,6 +3,7 @@ function init() {
   const grid = document.querySelector('.grid')
   const cells = []
   const scoreboard = document.querySelector('#score')
+  const highscoreboard = document.querySelector('#highscore')
   const startTheGame = document.querySelector('#STARTGAME')
   let gametimer = null
   let highScore = 0
@@ -21,6 +22,7 @@ function init() {
       this.classname = classname
       this.scaredclass = scaredclassname
       this.position = position
+      this.isDead = false
     }
 
     moveRandom(){
@@ -113,16 +115,16 @@ function init() {
         {this.position = this.position + width
         } else this.moveRandom()
       }
-      if (!gameOver){cells[this.position].classList.add(this.classname)}
+      if (!gameOver){
+        cells[this.position].classList.add(this.classname)}
     }
   }
 
-  const enemyA = new enemy('enemy1', 'enemy1', 'scaredenemy1', 337)
-  const enemyB = new enemy('enemy2', 'enemy2', 'scaredenemy2', 338)
-  const enemyC = new enemy('enemy3', 'enemy3', 'scaredenemy3', 339)
-  const enemyD = new enemy('enemy4', 'enemy4', 'scaredenemy4', 335)
+  const enemyA = new enemy('enemy1', 'enemy1', 'scaredenemy1', 337, false)
+  const enemyB = new enemy('enemy2', 'enemy2', 'scaredenemy2', 338, false)
+  const enemyC = new enemy('enemy3', 'enemy3', 'scaredenemy3', 339, false)
+  const enemyD = new enemy('enemy4', 'enemy4', 'scaredenemy4', 335, false)
   
-
   // * game variables
   let playerPosition = 0
   let playerScore = 0
@@ -204,7 +206,6 @@ function init() {
     cells[playerPosition].classList.remove('sprite') 
     cells[playerPosition].classList.remove('powerUp') 
     
-    
     const x = playerPosition % width
     const y = Math.floor(playerPosition / width)
     //finding the solution below was more painful and arduous than I care to admit.
@@ -221,7 +222,7 @@ function init() {
         playerPosition = playerPosition - width
       }
     } else if (event.keyCode === 40 || event.keyCode === 83){
-      if (y < width -1  && !cells[playerPosition + width].classList.contains('maze')) {
+      if (y < width - 1  && !cells[playerPosition + width].classList.contains('maze')) {
         playerPosition = playerPosition + width
       }
     } 
@@ -238,8 +239,11 @@ function init() {
       cookiesRemaining -= 1
       if (cookiesRemaining === 0){
         console.log('YOU WIN')
-        //generate winners class for entire grid
-        //redraw grid for it
+        checkHiScore()
+        highScore = localStorage.getItem('highscore')
+        if (highScore > playerScore){
+          highscoreboard.innerHTML = highScore
+        }
         gameOver = true
       }
       scoreboard.innerHTML = playerScore
@@ -259,8 +263,7 @@ function init() {
   }
 
   //---------- ENEMY TIMER --------
-  //TO DO set up a start game button to trigger this function
-  // hook up start button to game reset but NOT browser refresh
+
   function startTimer(){
     if (gameOver) {
       console.log("game is over")
@@ -285,7 +288,6 @@ function init() {
       enemyB.flee()
       enemyC.flee()
       enemyD.flee()
-      // console.log("powered up")
     }
   }
   // enemyA.position = 337
@@ -296,31 +298,29 @@ function init() {
   function endTheGame(){
     gameoverAudio()
     checkHiScore()
-    console.log("GAME OVER")
+    console.log('GAME OVER')
     clearInterval(gametimer)
     gameOver = true
     clearGrid()
-    // removeChild()
-    //THE GRID DIVS need to go, 
+    highScore = localStorage.getItem('highscore')
+    console.log('High score is ' + highScore)
+    highscoreboard.innerHTML = highScore
   }
-
-  // function removeChild(){
-  //   while (grid.hasChildNodes()) {
-  //     grid.removeChild(grid.lastChild)
-  //   }
-  // }
 
   function startGame(){
     clearInterval(gametimer)
     gameOver = false
     playerScore = 0
     scoreboard.innerHTML = playerScore
+    highScore = localStorage.getItem('highscore')
+    console.log('High score is ' + highScore)
+    highscoreboard.innerHTML = highScore
     createGrid(playerPosition)
     createMaze()
     startTimer()
     cookiesRemaining = 212
     console.log(cookiesRemaining)
-
+    
 
   }
 
@@ -339,7 +339,7 @@ function init() {
     createMaze()
     startTimer()
     cookiesRemaining = 212
-    console.log(cookiesRemaining)
+    // console.log(cookiesRemaining)
     playerPosition = 487
     cells[playerPosition].classList.add('sprite')
     enemyA.position = 337
