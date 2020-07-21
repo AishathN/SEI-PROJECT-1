@@ -404,6 +404,7 @@ function init() {
   function winOrLoseScreen(){
     if (!win){
       GameOverGraphic()
+      console.log("this is win or lose LOSE screen firing")
     } else {
       youWinGraphic()
       console.log("this is you win choice firing")
@@ -413,8 +414,10 @@ function init() {
   function clearWinOrLoseScreen(){
     if (!win){
       clearGOScreen()
+      console.log("this is clear GO screen firing")
     } else {
       clearWINScreen()
+      console.log("this is clear win screen firing")
     }
   }
   function clearGOScreen(){
