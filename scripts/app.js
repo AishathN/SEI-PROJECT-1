@@ -10,21 +10,22 @@ function init() {
   const wrap = document.querySelector('#wrap')
   const gameOverScreen = document.createElement('div')
   gameOverScreen.id = 'gameOverScreenID'
-  gameOverScreen.width = '750px';
-  gameOverScreen.height = '750px';
+  gameOverScreen.width = '750px'
+  gameOverScreen.height = '750px'
   const pikaSad = document.createElement('img')
   const pikaHappy = document.createElement('img')
-  // const body = document.querySelector('body')
   const youWinScreen = document.createElement('div')
   youWinScreen.id = 'youWinScreenID'
-  youWinScreen.width = '750px';
-  youWinScreen.height = '750px';
+  youWinScreen.width = '750px'
+  youWinScreen.height = '750px'
   let win = null
   // ---code for music---
-  const BGM = new Audio('audio/gymlobby.mp3');
-  BGM.volume = 0.1
+  const BGM = new Audio('audio/gymlobby.mp3')
+  BGM.volume = 0.2
   BGM.loop = true
-  // localStorage.setItem( highScore)
+  highScore = localStorage.getItem('highscore')
+  highscoreboard.innerHTML = highScore
+  // localStorage.setItem('highScore', playerScore) <-- redundant? useless? don't see another place where its declared before grabbing its value.. 
   
 
   // * grid variables
