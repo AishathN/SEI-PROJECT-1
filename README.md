@@ -12,21 +12,18 @@ Brief - Create a Pac-man game with the following minimum requirements:
 
 # Current Progress towards goal:
 
-* Player can currently clear one board.
-* Player's score is displayed in sidebar.
-* Create a high score function -- COMPLETE (localstorage)
+* Player can currently clear one board, complete.
+* Player's score is displayed in sidebar, complete.
+* Create a high score function, completed.
+* rather than ghosts running away, pokemon now hatch from an egg in the middle.
 
 # Current TO DO list:
 
 * Bonus berries with associated timeout 
-* Enemy destroyed sound effect and hookup
 * Game over graphic window over game panel
 * You win graphic window over game panel
-* Hi-score panel
 * Style the game interface 
 
 # OPTIONAL:
 
-* COMPLEX OPTIONAL TASK - instead of moving enemy immediately to center upon destruction, 
-  have an egg spawn at center and hatch after 3 seconds with enemy then appearing.
 * Different game board layout - just change outer maze, not inner maze

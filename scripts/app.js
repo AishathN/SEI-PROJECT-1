@@ -26,60 +26,63 @@ function init() {
     }
 
     moveRandom(){
-      
-      cells[this.position].classList.remove(this.classname)
-      //declare variables needed for measurements
-      const x = this.position % width
-      const y = Math.floor(this.position / width)
-      //create random number to choose path to come
-      const randomDirection = Math.floor(Math.random() * 4)
-  
-      if (randomDirection === 0){
-        this.deathOfEither()
-        if (x < width - 1 && !cells[this.position - width].classList.contains('maze'))
-        {this.position = this.position - width
-        } 
-      }   else if (randomDirection === 1){
-        if (x > 0 && !cells[this.position - 1].classList.contains('maze')) {
-          this.position = this.position - 1 
-        } 
-      }   else if (randomDirection === 2) {
-        if (y < width - 1  && !cells[this.position + width].classList.contains('maze')) {
-          this.position = this.position + width
-        } 
-      }   else if (randomDirection === 3){
-        if (x < width - 1 && !cells[this.position + 1].classList.contains('maze')){ 
-          this.position = this.position + 1
-        } 
-      } if (!gameOver){cells[this.position].classList.add(this.classname)}
+      if (!this.isDead){
+        cells[this.position].classList.remove(this.classname)
+        //declare variables needed for measurements
+        const x = this.position % width
+        const y = Math.floor(this.position / width)
+        //create random number to choose path to come
+        const randomDirection = Math.floor(Math.random() * 4)
+    
+        if (randomDirection === 0){
+          this.deathOfEither()
+          if (x < width - 1 && !cells[this.position - width].classList.contains('maze'))
+          {this.position = this.position - width
+          } 
+        }   else if (randomDirection === 1){
+          if (x > 0 && !cells[this.position - 1].classList.contains('maze')) {
+            this.position = this.position - 1 
+          } 
+        }   else if (randomDirection === 2) {
+          if (y < width - 1  && !cells[this.position + width].classList.contains('maze')) {
+            this.position = this.position + width
+          } 
+        }   else if (randomDirection === 3){
+          if (x < width - 1 && !cells[this.position + 1].classList.contains('maze')){ 
+            this.position = this.position + 1
+          } 
+        } if (!gameOver && !this.isDead){cells[this.position].classList.add(this.classname)}
+      } 
     }
   
     follow(){
-      cells[this.position].classList.remove(this.classname)
-      cells[this.position].classList.remove(this.scaredclass)
-      
-      const x = this.position % width
-      const y = Math.floor(this.position / width)
-      this.deathOfEither()
-      if (playerPosition > this.position && playerPosition - this.position < width)  {
-        if (x < width - 1 && !cells[this.position + 1].classList.contains('maze')){ 
-          this.position = this.position + 1
-        } else this.moveRandom()
-      }   else if (playerPosition > this.position){
-        if (y < width - 1  && !cells[this.position + width].classList.contains('maze')) {
-          this.position = this.position + width
-        } else this.moveRandom()
-      }   else if (playerPosition < this.position && this.position - playerPosition < width) {
-        if (x > 0 && !cells[this.position - 1].classList.contains('maze')) {
-          this.position = this.position - 1 
-        } else this.moveRandom()
-      }   else if (playerPosition < this.position)  {
-        if (x < width - 1 && !cells[this.position - width].classList.contains('maze'))
-        {this.position = this.position - width
-        } else this.moveRandom()
-      }
-      if (!gameOver){cells[this.position].classList.add(this.classname)}
-    }
+      if (!this.isDead) {
+        cells[this.position].classList.remove(this.classname)
+        cells[this.position].classList.remove(this.scaredclass)
+        
+        const x = this.position % width
+        const y = Math.floor(this.position / width)
+        this.deathOfEither()
+        if (playerPosition > this.position && playerPosition - this.position < width)  {
+          if (x < width - 1 && !cells[this.position + 1].classList.contains('maze')){ 
+            this.position = this.position + 1
+          } else this.moveRandom()
+        }   else if (playerPosition > this.position){
+          if (y < width - 1  && !cells[this.position + width].classList.contains('maze')) {
+            this.position = this.position + width
+          } else this.moveRandom()
+        }   else if (playerPosition < this.position && this.position - playerPosition < width) {
+          if (x > 0 && !cells[this.position - 1].classList.contains('maze')) {
+            this.position = this.position - 1 
+          } else this.moveRandom()
+        }   else if (playerPosition < this.position)  {
+          if (x < width - 1 && !cells[this.position - width].classList.contains('maze'))
+          {this.position = this.position - width
+          } else this.moveRandom()
+        }
+        if (!gameOver && !this.isDead){cells[this.position].classList.add(this.classname)}
+      } 
+    } 
 
     deathOfEither(){
       if (playerPosition === this.position && !cells[playerPosition].classList.contains('powerUp')){
@@ -88,35 +91,53 @@ function init() {
       } else if (playerPosition === this.position && cells[playerPosition].classList.contains('powerUp')){
         this.position = 337
         playerScore += 5000
+        cells[this.position].classList.remove(this.classname)
+        gameoverAudio()
+        this.eggTimer()
       }
 
     }
   
-    flee(){
+    flee(){ 
+      if (this.isDead === false) {
+        cells[this.position].classList.remove(this.classname)
+        this.deathOfEither()
+        const x = this.position % width
+        const y = Math.floor(this.position / width)
+    
+        if (playerPosition > this.position && playerPosition - this.position < width)  {
+          if (x < width - 1 && !cells[this.position - 1].classList.contains('maze')){ 
+            this.position = this.position - 1
+          } else this.moveRandom()
+        }   else if (playerPosition > this.position){
+          if (y < width - 1  && !cells[this.position - width].classList.contains('maze')) {
+            this.position = this.position - width
+          } else this.moveRandom()
+        }   else if (playerPosition < this.position && this.position - playerPosition < width) {
+          if (x > 0 && !cells[this.position + 1].classList.contains('maze')) {
+            this.position = this.position + 1 
+          } else this.moveRandom()
+        }   else if (playerPosition < this.position)  {
+          if (x < width - 1 && !cells[this.position + width].classList.contains('maze'))
+          {this.position = this.position + width
+          } else this.moveRandom()
+        }
+        if (!gameOver && !this.isDead){
+          cells[this.position].classList.add(this.classname)}
+      } 
+    }
+
+    eggTimer() {
+      this.isDead = true
       cells[this.position].classList.remove(this.classname)
-      this.deathOfEither()
-      const x = this.position % width
-      const y = Math.floor(this.position / width)
-  
-      if (playerPosition > this.position && playerPosition - this.position < width)  {
-        if (x < width - 1 && !cells[this.position - 1].classList.contains('maze')){ 
-          this.position = this.position - 1
-        } else this.moveRandom()
-      }   else if (playerPosition > this.position){
-        if (y < width - 1  && !cells[this.position - width].classList.contains('maze')) {
-          this.position = this.position - width
-        } else this.moveRandom()
-      }   else if (playerPosition < this.position && this.position - playerPosition < width) {
-        if (x > 0 && !cells[this.position + 1].classList.contains('maze')) {
-          this.position = this.position + 1 
-        } else this.moveRandom()
-      }   else if (playerPosition < this.position)  {
-        if (x < width - 1 && !cells[this.position + width].classList.contains('maze'))
-        {this.position = this.position + width
-        } else this.moveRandom()
-      }
-      if (!gameOver){
-        cells[this.position].classList.add(this.classname)}
+      cells[this.position].classList.remove(this.classname)
+      cells[337].classList.add('egg')
+      setTimeout(() => {
+        cells[337].classList.remove('egg')
+        this.position = 337
+        cells[this.position].classList.add(this.classname)
+        this.isDead = false
+      }, 6000)
     }
   }
 
@@ -279,21 +300,34 @@ function init() {
 
   function moveEnemies(){
     if (poweredUp === false){
-      enemyA.follow()
-      enemyB.follow()
-      enemyC.follow()
-      enemyD.follow()
+      if (!enemyA.isDead) {
+        enemyA.follow()
+      }
+      if (!enemyB.isDead) {
+        enemyB.follow()
+      }
+      if (!enemyC.isDead) {
+        enemyC.follow()
+      }
+      if (!enemyD.isDead) {
+        enemyD.follow()
+      }
     } else if (poweredUp === true){
-      enemyA.flee()
-      enemyB.flee()
-      enemyC.flee()
-      enemyD.flee()
+      if (!enemyA.isDead) {
+        enemyA.flee()
+      }
+      if (!enemyB.isDead) {
+        enemyB.flee()
+      }
+      if (!enemyC.isDead) {
+        enemyC.flee()
+      }
+      if (!enemyD.isDead) {
+        enemyD.flee()
+      }
+      
     }
   }
-  // enemyA.position = 337
-  // enemyB.position = 335
-  // enemyC.position = 339
-  // enemyD.position = 338
 
   function endTheGame(){
     gameoverAudio()
@@ -319,15 +353,11 @@ function init() {
     createMaze()
     startTimer()
     cookiesRemaining = 212
-    console.log(cookiesRemaining)
     
-
   }
 
   function resetGame(){
 
-    // endTheGame()
-    // clearGrid()
     cells[enemyA.position].classList.remove('enemy1')
     cells[enemyB.position].classList.remove('enemy2')
     cells[enemyC.position].classList.remove('enemy3')
@@ -339,7 +369,6 @@ function init() {
     createMaze()
     startTimer()
     cookiesRemaining = 212
-    // console.log(cookiesRemaining)
     playerPosition = 487
     cells[playerPosition].classList.add('sprite')
     enemyA.position = 337
@@ -352,8 +381,6 @@ function init() {
     cells[enemyD.position].classList.add('enemy4')
 
   }
-
-  
 
   function powerupAudio() {
     const powerAudio = new Audio('audio/FoundItem.mp3')
@@ -379,23 +406,21 @@ function init() {
     } 
     highScore = localStorage.getItem('highscore')
     console.log("High score is " + highScore)
-    // else {
-    //   localStorage.setItem('highscore', highScore)
-    // }
   }
 
 
-  //call the grid below so the cells exist
+  setTimeout(() => {
+    cells[playerPosition].classList.remove('powerUp')
+    poweredUp = false
+  }, 5000)
 
-  // startGame()
-  
   // * Event listeners
 
-  //checking for player input
   document.addEventListener('keyup', handleKeyUp)
   startTheGame.addEventListener('click', resetGame)
 
   startGame()
+
 }
 
 window.addEventListener('DOMContentLoaded', init)
