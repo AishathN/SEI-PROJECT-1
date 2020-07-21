@@ -5,6 +5,9 @@ function init() {
   const scoreboard = document.querySelector('#score')
   const startTheGame = document.querySelector('#STARTGAME')
   let gametimer = null
+  let highScore = 0
+  // localStorage.setItem( highScore)
+  
 
   // * grid variables
   const width = 25
@@ -292,6 +295,7 @@ function init() {
 
   function endTheGame(){
     gameoverAudio()
+    checkHiScore()
     console.log("GAME OVER")
     clearInterval(gametimer)
     gameOver = true
@@ -300,11 +304,11 @@ function init() {
     //THE GRID DIVS need to go, 
   }
 
-  function removeChild(){
-    while (grid.hasChildNodes()) {
-      grid.removeChild(grid.lastChild)
-  }
-  }
+  // function removeChild(){
+  //   while (grid.hasChildNodes()) {
+  //     grid.removeChild(grid.lastChild)
+  //   }
+  // }
 
   function startGame(){
     clearInterval(gametimer)
@@ -361,6 +365,26 @@ function init() {
     const gamedeathAudio = new Audio('audio/bomb.wav')
     gamedeathAudio.play()
   }
+
+  function checkHiScore(){
+    if (playerScore > highScore){
+      highScore = playerScore
+    }
+  }
+
+  function checkHiScore(){
+    highScore = localStorage.getItem('highscore')
+    if (playerScore > highScore){
+      localStorage.setItem('highscore', playerScore)
+    } 
+    highScore = localStorage.getItem('highscore')
+    console.log("High score is " + highScore)
+    // else {
+    //   localStorage.setItem('highscore', highScore)
+    // }
+  }
+
+
   //call the grid below so the cells exist
 
   // startGame()
