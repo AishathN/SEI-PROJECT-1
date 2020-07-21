@@ -364,7 +364,8 @@ function init() {
 
   function startGame(){
     clearInterval(gametimer)
-    BGM.pause()
+    // BGM.pause()
+    BGM.currentTime = 0
     BGM.play()
     win = null
     gameOver = false
@@ -492,6 +493,7 @@ function init() {
   // startGame()
   createGrid(playerPosition)
   createMaze()
+  gameOver = true
  
 
 }

@@ -16,13 +16,3 @@ Brief - Create a Pac-man game with the following minimum requirements:
 * Player's score is displayed in sidebar, complete.
 * MVP complete other than debugging win/lose screen
 
-# Current TO DO list:
-
-* BGM addition 
-* write conditional win/lose to govern game screen
-* Style the game interface 
-
-# OPTIONAL:
-
-* Different game board layout - just change outer maze, not inner maze
-* Bonus berries with associated timeout
