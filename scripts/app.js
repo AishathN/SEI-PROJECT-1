@@ -7,6 +7,13 @@ function init() {
   const startTheGame = document.querySelector('#STARTGAME')
   let gametimer = null
   let highScore = 0
+  const wrap = document.querySelector('#wrap')
+  const gameOverScreen = document.createElement('div')
+  gameOverScreen.id = 'gameOverScreenID'
+  gameOverScreen.width = '750px';
+  gameOverScreen.height = '338px';
+  const pikaSad = document.createElement('img')
+  const body = document.querySelector('body')
   // localStorage.setItem( highScore)
   
 
@@ -299,7 +306,7 @@ function init() {
   }
 
   function moveEnemies(){
-    if (poweredUp === false){
+    if (poweredUp === false && !gameOver){
       if (!enemyA.isDead) {
         enemyA.follow()
       }
@@ -312,7 +319,7 @@ function init() {
       if (!enemyD.isDead) {
         enemyD.follow()
       }
-    } else if (poweredUp === true){
+    } else if (poweredUp === true && !gameOver){
       if (!enemyA.isDead) {
         enemyA.flee()
       }
@@ -339,6 +346,7 @@ function init() {
     highScore = localStorage.getItem('highscore')
     console.log('High score is ' + highScore)
     highscoreboard.innerHTML = highScore
+    GameOverGraphic()
   }
 
   function startGame(){
@@ -355,9 +363,8 @@ function init() {
     cookiesRemaining = 212
     
   }
-
   function resetGame(){
-
+    clearGOScreen()
     cells[enemyA.position].classList.remove('enemy1')
     cells[enemyB.position].classList.remove('enemy2')
     cells[enemyC.position].classList.remove('enemy3')
@@ -380,6 +387,10 @@ function init() {
     enemyD.position = 338
     cells[enemyD.position].classList.add('enemy4')
 
+  }
+
+  function clearGOScreen(){
+    wrap.removeChild(gameOverScreen)
   }
 
   function powerupAudio() {
@@ -406,8 +417,13 @@ function init() {
     } 
     highScore = localStorage.getItem('highscore')
     console.log("High score is " + highScore)
+    highscoreboard.innerHTML = highScore
   }
 
+  function GameOverGraphic(){
+    gameOverScreen.appendChild(pikaSad)
+    wrap.appendChild(gameOverScreen)
+  }
 
   setTimeout(() => {
     cells[playerPosition].classList.remove('powerUp')
@@ -420,6 +436,7 @@ function init() {
   startTheGame.addEventListener('click', resetGame)
 
   startGame()
+
 
 }
 

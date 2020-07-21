@@ -152,3 +152,14 @@ body {
   background-position: center;
   background-size: 100%;
 }
+
+#gameOverScreenID {
+align-self:center;
+position:absolute;
+width:750px;
+height:338px;
+background-image: url('../images/pikachulargesad.jpg');
+background-color:black;
+background-repeat: no-repeat;
+background-size: cover;
+}
