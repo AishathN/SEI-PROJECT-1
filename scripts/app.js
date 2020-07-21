@@ -19,7 +19,11 @@ function init() {
   youWinScreen.id = 'youWinScreenID'
   youWinScreen.width = '750px';
   youWinScreen.height = '750px';
-  let win = false
+  let win = null
+  // ---code for music---
+  const BGM = new Audio('audio/gymlobby.mp3');
+  BGM.volume = 0.1
+  BGM.loop = true
   // localStorage.setItem( highScore)
   
 
@@ -359,14 +363,15 @@ function init() {
 
   function startGame(){
     clearInterval(gametimer)
+    BGM.pause()
+    BGM.play()
     win = null
     gameOver = false
     playerScore = 0
     scoreboard.innerHTML = playerScore
     highScore = localStorage.getItem('highscore')
     highscoreboard.innerHTML = highScore
-    createGrid(playerPosition)
-    createMaze()
+    // 
     startTimer()
     cookiesRemaining = 212
     
@@ -375,6 +380,8 @@ function init() {
     if (!win || win){
       clearWinOrLoseScreen()
     }
+    BGM.pause()
+    BGM.play()
     win = null
     cells[enemyA.position].classList.remove('enemy1')
     cells[enemyB.position].classList.remove('enemy2')
@@ -404,28 +411,34 @@ function init() {
   function winOrLoseScreen(){
     if (!win){
       GameOverGraphic()
+      BGM.pause()
       console.log("this is win or lose LOSE screen firing")
     } else {
       youWinGraphic()
+      BGM.pause()
       console.log("this is you win choice firing")
     }
   }
 
   function clearWinOrLoseScreen(){
-    if (!win){
+    if (win === false){
       clearGOScreen()
       console.log("this is clear GO screen firing")
-    } else {
+    } else if (win === true){
       clearWINScreen()
       console.log("this is clear win screen firing")
     }
   }
   function clearGOScreen(){
+    if (win === false){
     wrap.removeChild(gameOverScreen)
+    }
   }
 
   function clearWINScreen(){
+    if (win === true){
     wrap.removeChild(youWinScreen)
+    }
   }
 
   function powerupAudio() {
@@ -475,11 +488,10 @@ function init() {
   document.addEventListener('keyup', handleKeyUp)
   startTheGame.addEventListener('click', resetGame)
 
-  startGame()
-  // ---code for music---
-  // const BGM = new Audio('audio/gymlobby.mp3');
-  // BGM.volume = 0.2
-  // BGM.play()
+  // startGame()
+  createGrid(playerPosition)
+  createMaze()
+ 
 
 }
 
