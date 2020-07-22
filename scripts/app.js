@@ -321,7 +321,7 @@ function init() {
         if (!gameOver){
           moveEnemies()
         }
-      }, 300)
+      }, 280)
     }
   }
 

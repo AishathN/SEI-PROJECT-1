@@ -34,7 +34,7 @@ body {
   justify-content:center;
   align-items:center;
   background-color: rgb(55, 54, 54);
-  height:700px;
+  height:750px;
   padding:10px;
   border-radius: 25px;
   background-image: url('../images/textured-salmon-pink-colored-plastic-close-up.jpg');
@@ -166,7 +166,13 @@ padding:10px
   background-image: url('../images/grass_tile.png');
   background-repeat: repeat;
   background-position: center;
-  background-size: 55%;
+  background-size: 95%;
+}
+
+.wasd img{
+width:250px;
+margin:40 0 0 0;
+/* box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.6); */
 }
 
 .cookie{
@@ -183,7 +189,7 @@ padding:10px
   background-size: 100%;
 
 }
-
+/* 
 .scaredEnemy1 {
   background-image: url('../images/koffing.gif');
   background-blend-mode: color-dodge;
@@ -191,7 +197,7 @@ padding:10px
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
-}
+} */
 
 .enemy2{
   background-image: url('../images/ekans.gif');
