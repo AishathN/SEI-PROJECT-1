@@ -382,7 +382,7 @@ function init() {
     if (!win || win){
       clearWinOrLoseScreen()
     }
-    BGM.pause()
+    BGM.currentTime = 0
     BGM.play()
     win = null
     cells[enemyA.position].classList.remove('enemy1')
