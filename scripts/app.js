@@ -5,6 +5,7 @@ function init() {
   const scoreboard = document.querySelector('#score')
   const highscoreboard = document.querySelector('#highscore')
   const startTheGame = document.querySelector('#STARTGAME')
+  const stopTheGame = document.querySelector('#RESETGAME')
   const musicOn = document.querySelector('#music')
   const musicOff = document.querySelector('#noMusic')
   let gametimer = null
@@ -365,20 +366,39 @@ function init() {
     highscoreboard.innerHTML = highScore
   }
 
-  function startGame(){
+  function stopGame(){
+    if (!win || win){
+      clearWinOrLoseScreen()
+    }
     clearInterval(gametimer)
-    // BGM.pause()
+    BGM.pause()
     BGM.currentTime = 0
-    BGM.play()
     win = null
-    gameOver = false
     playerScore = 0
+    cells[enemyA.position].classList.remove('enemy1')
+    cells[enemyB.position].classList.remove('enemy2')
+    cells[enemyC.position].classList.remove('enemy3')
+    cells[enemyD.position].classList.remove('enemy4')
+    clearGrid()
     scoreboard.innerHTML = playerScore
     highScore = localStorage.getItem('highscore')
     highscoreboard.innerHTML = highScore
-    // 
-    startTimer()
     cookiesRemaining = 212
+    playerPosition = 487
+    cells[playerPosition].classList.add('sprite')
+    // createGrid(playerPosition)
+    createMaze()
+    playerPosition = 487
+    cells[playerPosition].classList.add('sprite')
+    enemyA.position = 337
+    cells[enemyA.position].classList.add('enemy1')
+    enemyB.position = 335
+    cells[enemyB.position].classList.add('enemy2')
+    enemyC.position = 339
+    cells[enemyC.position].classList.add('enemy3')
+    enemyD.position = 338
+    cells[enemyD.position].classList.add('enemy4')
+    gameOver = true
     
   }
   function resetGame(){
@@ -496,12 +516,14 @@ function init() {
     BGM.volume = 0
   }
   
+  
 
   // * Event listeners
 
   document.addEventListener('keyup', handleKeyUp)
   // document.addEventListener('keyup', toggleBGM)
   startTheGame.addEventListener('click', resetGame)
+  stopTheGame.addEventListener('click', stopGame)
   musicOn.addEventListener('click', toggleBGMOn)
   musicOff.addEventListener('click', toggleBGMOff)
   // startGame()
@@ -509,7 +531,7 @@ function init() {
   createMaze()
   gameOver = true
  
-
+  stopGame()
 }
 
 window.addEventListener('DOMContentLoaded', init)

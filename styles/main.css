@@ -47,17 +47,22 @@ body {
 }
 
 .roundBtn{
-  margin:35px;
+  margin:9px;
   background-color:rgb(211, 46, 85);
   border-radius: 50%;
-  height: 100px;
-  width:100px;
-  font-size:20px ;
+  height: 80px;
+  width:80px;
+  font-size:15px ;
   color:black;
   font-weight: bold;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 1);
 }
 
+.buttons{
+  display:flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+}
 .pikamanLogo img{
   width:200px;
   margin:35px;
