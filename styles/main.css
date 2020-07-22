@@ -6,11 +6,13 @@
 body {
   height: 100vh;
   margin: 0;
+  background-color: darkslategray;
 }
 
 .console{
   display:flex;
   flex-direction:row;
+  align-items:center;
   justify-content:center;
   background-color: darkslategray;
   min-height:900px;
@@ -20,7 +22,20 @@ body {
   flex-direction:column-reverse;
   justify-content:center;
   align-items:center;
+  /* background-color: grey; */
+  height:800px;
+
   /* background-color: dimgray; */
+}
+
+.rightSideConsole {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  background-color: grey;
+  height:700px;
+  border-radius: 25px;
 }
 
 .allblack{
