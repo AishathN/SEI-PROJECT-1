@@ -5,6 +5,8 @@ function init() {
   const scoreboard = document.querySelector('#score')
   const highscoreboard = document.querySelector('#highscore')
   const startTheGame = document.querySelector('#STARTGAME')
+  const musicOn = document.querySelector('#music')
+  const musicOff = document.querySelector('#noMusic')
   let gametimer = null
   let highScore = 0
   const wrap = document.querySelector('#wrap')
@@ -25,6 +27,7 @@ function init() {
   BGM.loop = true
   highScore = localStorage.getItem('highscore')
   highscoreboard.innerHTML = highScore
+  
   // localStorage.setItem('highScore', playerScore) <-- redundant? useless? don't see another place where its declared before grabbing its value.. 
   
 
@@ -485,21 +488,22 @@ function init() {
     poweredUp = false
   }, 5000)
   
-  function toggleBGM(){
-    if (event.keyCode === 81){
-      BGM.volume = 0.2
-    }
-    else if (event.keyCode === 69){
-      BGM.volume = 0
-    }
+  
+  function toggleBGMOn(){
+    BGM.volume = 0.2
   }
+  function toggleBGMOff(){
+    BGM.volume = 0
+  }
+  
 
   // * Event listeners
 
   document.addEventListener('keyup', handleKeyUp)
-  document.addEventListener('keyup', toggleBGM)
+  // document.addEventListener('keyup', toggleBGM)
   startTheGame.addEventListener('click', resetGame)
-
+  musicOn.addEventListener('click', toggleBGMOn)
+  musicOff.addEventListener('click', toggleBGMOff)
   // startGame()
   createGrid(playerPosition)
   createMaze()
