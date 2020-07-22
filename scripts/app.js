@@ -454,11 +454,11 @@ function init() {
     gamedeathAudio.play()
   }
 
-  function checkHiScore(){
-    if (playerScore > highScore){
-      highScore = playerScore
-    }
-  }
+  // function checkHiScore(){
+  //   if (playerScore > highScore){
+  //     highScore = playerScore
+  //   }
+  // }
 
   function checkHiScore(){
     highScore = localStorage.getItem('highscore')
@@ -484,10 +484,20 @@ function init() {
     cells[playerPosition].classList.remove('powerUp')
     poweredUp = false
   }, 5000)
+  
+  function toggleBGM(){
+    if (event.keyCode === 81){
+      BGM.volume = 0.2
+    }
+    else if (event.keyCode === 69){
+      BGM.volume = 0
+    }
+  }
 
   // * Event listeners
 
   document.addEventListener('keyup', handleKeyUp)
+  document.addEventListener('keyup', toggleBGM)
   startTheGame.addEventListener('click', resetGame)
 
   // startGame()
