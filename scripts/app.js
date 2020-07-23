@@ -328,7 +328,7 @@ function init() {
       playerScore += 100
       cookiesRemaining -= 1
       //-----------WINNING CONDITION HERE------------
-      if (cookiesRemaining === 200){
+      if (cookiesRemaining === 0){
         toggleBGMOff()
         youWinAudio()
         checkHiScore()
