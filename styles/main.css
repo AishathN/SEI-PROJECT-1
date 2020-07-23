@@ -346,3 +346,16 @@ background-size: cover;
   background-repeat: no-repeat;
   background-size: cover;
   }
+
+  #welcomeID {
+    align-self:center;
+    justify-self: center;
+    position:absolute;
+    /* margin:45px; */
+    width:650px;
+    height:530px;
+    background-image: url('../images/pikamanstarterscreen.png');
+    background-color:black;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }

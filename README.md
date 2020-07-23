@@ -29,6 +29,4 @@ Brief - Create a Pac-man game with the following minimum requirements:
 
 # Known bugs / issues
 
-* The player can sometimes pass through enemies when powered up, without eliminating them. This happens occasionally when the movement keys are held down, which is a problem with browser games it seems? Have implemented collision logic on npc and player side to minimise as much as possible.
-
-* Chaining powerups one on top of the other is not possible as the first timer still removes the class if the player grabs another pokeball while powered up. Working on a fix but might not make deadline on this one. 
+* The player can sometimes pass through enemies when powered up, without eliminating them. This happens occasionally when the movement keys are held down, have implemented collision logic on npc and player side to minimise as much as possible.

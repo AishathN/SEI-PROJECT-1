@@ -26,6 +26,11 @@ function init() {
   youWinScreen.id = 'youWinScreenID'
   youWinScreen.width = '750px'
   youWinScreen.height = '750px'
+  const welcome = document.createElement('div')
+  const pikaWelcome = document.createElement('img')
+  welcome.id = 'welcomeID'
+  welcome.width = '750px'
+  welcome.height = '750px'
 
 
   // --- code for music --- needs to exist prior to other audio hence positioning
@@ -324,7 +329,6 @@ function init() {
       cookiesRemaining -= 1
       //winning condition below
       if (cookiesRemaining === 0){
-        console.log('YOU WIN')
         toggleBGMOff()
         youWinAudio()
         checkHiScore()
@@ -349,13 +353,10 @@ function init() {
     if (cells[playerPosition].classList.contains('pokeBall')){
       poweringUp()
     }
-
   }
   }
   }
   
-  
-
   //---------- ENEMY TIMER --------
 
   function startTimer(){
@@ -553,7 +554,7 @@ function init() {
     highscoreboard.innerHTML = highScore
   }
 
-  //game over and you win graphics 
+  //game over and you win graphics, and welcome screen
 
   function GameOverGraphic(){
     gameOverScreen.appendChild(pikaSad)
@@ -563,6 +564,11 @@ function init() {
   function youWinGraphic(){
     youWinScreen.appendChild(pikaHappy)
     wrap.appendChild(youWinScreen)
+  }
+
+  function welcomeTotheGame(){
+    welcome.appendChild(pikaWelcome)
+    wrap.appendChild(welcome)
   }
 
   //removing powerup from player after time limit
@@ -598,6 +604,7 @@ function init() {
   }
 
   //extra collision detection on player side
+  // last minute addition to help counter phasing through enemies, hence wordiness.
 
   function pikaCollision(){
     if (playerPosition === enemyA.position && !cells[playerPosition].classList.contains('powerUp')){
@@ -647,6 +654,7 @@ function init() {
     }
   } 
 
+  // powerup functions with extra conditionals to prevent early loss of powerup if stacked
   function poweringUp(){
     if (!cells[playerPosition].classList.contains('powerUp')){
       powerUpTime()
@@ -678,6 +686,11 @@ function init() {
   gameOver = true
  
   //the below function initialises the game setup but does not start enemies
+  //welcome screen added
+  welcomeTotheGame()
+  setTimeout(() => {
+    wrap.removeChild(welcome)
+  }, 8000)
   stopGame()
 }
 
