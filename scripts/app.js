@@ -11,6 +11,7 @@ function init() {
   let gametimer = null
   let berryTimer = null
   let highScore = 0
+  let win = null
 
   //creating divs for game over and you win screens, to be appended at the appropriate time
   const wrap = document.querySelector('#wrap')
@@ -24,17 +25,15 @@ function init() {
   youWinScreen.id = 'youWinScreenID'
   youWinScreen.width = '750px'
   youWinScreen.height = '750px'
-  let win = null
-  // ---code for music---
+
+
+  // --- code for music --- needs to exist prior to other audio hence positioning
   const BGM = new Audio('audio/gymlobby.mp3')
   BGM.volume = 0.2
   BGM.loop = true
   //highscore storage setup
   highScore = localStorage.getItem('highscore')
   highscoreboard.innerHTML = highScore
-  
-  // localStorage.setItem('highScore', playerScore) <-- redundant? useless? 
-  //don't see another place where its declared before grabbing its value.. 
 
   // * grid variables
   const width = 25
@@ -46,18 +45,15 @@ function init() {
     constructor(name, classname , scaredclassname, position) {
       this.name = name
       this.classname = classname
-      // this.scaredclass = scaredclassname <-- ended up not using
       this.position = position
       this.isDead = false //< -- needed for egg timer
     }
-
+    //random movement function 
     moveRandom(){
       if (!this.isDead){
         cells[this.position].classList.remove(this.classname)
-        //declare variables needed for measurements
         const x = this.position % width
         const y = Math.floor(this.position / width)
-        //create random number to choose path to come
         const randomDirection = Math.floor(Math.random() * 4)
     
         if (randomDirection === 0){
@@ -80,7 +76,7 @@ function init() {
         } if (!gameOver && !this.isDead){cells[this.position].classList.add(this.classname)}
       } 
     }
-  
+    //enemy chase function 
     follow(){
       if (!this.isDead) {
         cells[this.position].classList.remove(this.classname)
@@ -109,11 +105,11 @@ function init() {
         if (!gameOver && !this.isDead){cells[this.position].classList.add(this.classname)}
       } 
     } 
-
+    //enemy check for death of player/enemy and either starts egg or ends game
     deathOfEither(){
       if (playerPosition === this.position && !cells[playerPosition].classList.contains('powerUp')){
         endTheGame()
-        clearGrid()
+        // clearGrid()
         winOrLoseScreen()
         win = false
       } else if (playerPosition === this.position && cells[playerPosition].classList.contains('powerUp')){
@@ -125,7 +121,7 @@ function init() {
       }
 
     }
-  
+    //enemy run away function
     flee(){ 
       if (this.isDead === false) {
         cells[this.position].classList.remove(this.classname)
@@ -154,7 +150,7 @@ function init() {
           cells[this.position].classList.add(this.classname)}
       } 
     }
-
+    //checks if enemy is dead and if so spawns egg and timer
     eggTimer() {
       this.isDead = true
       cells[this.position].classList.remove(this.classname)
@@ -168,7 +164,7 @@ function init() {
       }, 6000)
     }
   }
-
+  //create enemies from constructor function 
   const enemyA = new enemy('enemy1', 'enemy1', 'scaredenemy1', 337, false)
   const enemyB = new enemy('enemy2', 'enemy2', 'scaredenemy2', 338, false)
   const enemyC = new enemy('enemy3', 'enemy3', 'scaredenemy3', 339, false)
@@ -182,6 +178,8 @@ function init() {
   let poweredUp = false
   let gameOver = false
   
+  //clears game grid of all classes for reset or game over
+
   function clearGrid (){
     for (let i = 0; i < 625; i++){
       cells[i].classList = null
@@ -212,26 +210,29 @@ function init() {
   }
 
   //----------- MAZE CREATION FUNCTION-----------
-  /// -----also creates cookies and powerups ----
+  /// -----also creates apples and powerups ----
   function createMaze(){
     const mazeCoords1 = 
-    [ 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,53,54,55,78,103,104,105,106,81,56,63,88,58,59,60,61,86,111,108,109,110,
-      83,65, 66, 67, 68, 70, 71, 72, 73, 90, 93, 95, 98, 115, 116, 117, 118, 120, 121, 122, 123, 153, 154, 155, 156, 203, 204, 205, 206,178, 181, 170,
-      171, 172, 173, 198, 195, 220, 221, 222, 223, 410, 411, 412, 413, 414, 415, 416, 438, 463, 358, 383, 408, 368, 393, 418, 318, 308, 553, 554, 555, 556, 557, 558,
-      559, 560, 561, 565, 566, 567, 568, 569, 570, 571, 572, 573, 523, 524, 503, 502, 238, 158, 183, 208, 233, 258, 283, 168, 193, 218, 243, 268, 293, 270, 271, 
-      272, 273, 274, 252, 253, 254, 255, 256, 281, 306, 295, 302, 291, 285,310, 335, 302, 303, 304, 305, 320, 321, 322, 323, 324, 352, 353, 354, 
-      356, 381, 402, 403, 404, 405, 406, 370, 371, 372, 373, 374, 395, 420, 421, 422, 423, 424, 234, 235, 236, 240, 241, 242, 310, 335, 360, 361, 365,
-      366, 316, 341, 453, 454, 455, 480, 505, 457, 458, 459, 460, 461, 507, 532, 471, 472, 473, 496, 521, 519, 538, 563, 465, 466, 467, 468, 509, 510, 511,331, 345,
-      512, 513, 514, 515, 516, 517, 469, 50, 75, 100, 125, 150, 175, 200, 225, 250,275, 300, 325, 350, 375, 400, 425, 450, 475, 500, 525, 550, 575, 600, 625, 601,
-      602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617,618, 619, 620, 621, 622, 623, 624, 26,51, 76, 101, 126, 151, 176, 201, 226, 251,
-      276, 301, 326, 351, 376, 401, 426, 451, 476, 501, 526, 551, 576, 160, 185, 161,162, 163, 164, 165, 166, 186, 187, 188, 189, 190, 191, 355, 544, 213
+    [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 50, 53, 54, 55, 78, 51, 56,
+      58, 59, 60, 61, 63, 65, 66, 67, 68, 70, 71, 72, 73, 75,76, 81, 83, 86, 88, 90, 93, 95, 98,
+      100,101, 103,104,105,106,108,109,110,111,115, 116, 117, 118, 120, 121, 122, 123, 125, 126, 150,151, 153, 154, 155, 156, 158, 160, 161,162, 163, 164, 165, 166, 168, 170,171,
+      172, 173, 175, 176, 178, 181, 183, 185, 186, 187, 188, 189, 190, 191 ,193, 195, 198,
+      200, 203, 204, 205, 206, 208, 213, 218, 220, 221, 222, 223, 225, 226, 234, 235, 236, 238, 240, 241, 242,243, 252, 253, 254, 255, 256, 268, 270, 271, 272, 273, 274, 276,  281,
+      250,275,201, 251,295,291, 285, 233, 258, 283,  293, 
+      306, 302, 301, 326, 310, 335, 302, 303, 304, 305, 318, 308, 320, 321, 322, 323, 324, 352, 353, 354, 300, 325, 350, 375, 351, 
+      376, 370, 371, 372, 373, 374, 395, 310, 335, 360, 361, 365, 358, 383,  368, 393, 331, 345, 356, 381, 366, 316, 341,
+      402, 403, 404, 405, 406, 408,  420, 421, 422, 423, 424, 401, 426, 451, 476,  418, 453, 454, 455, 480, 457, 458, 459, 460, 
+      461, 465, 466, 467, 468, 471, 472, 473,  410, 411, 412, 413, 414, 415, 416, 438, 463, 496,469,  400, 425, 450, 475,
+      521, 519, 538, 563, 505, 509, 510, 511, 512, 513, 514, 515, 516, 517,  500, 525, 550, 575, 501, 526, 551, 576, 355, 544, 
+      553, 554, 555, 556, 557, 558,507, 532, 559, 560, 561, 565, 566, 567, 568, 569, 570, 571, 572, 573, 523, 524, 503, 502,
+      602, 603, 604, 605, 606, 607, 608, 609, 610, 611, 612, 613, 614, 615, 616, 617,618, 619, 620, 621, 622, 623, 624, 600, 625, 601
 
     ]
     mazeCoords1.map( coord =>{
       cells[coord-1].classList.add('maze')
     })
 
-    //----- cookie creation ------
+    //----- apple creation ------
 
     const cookieCoords1 = [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 52, 57,62, 64, 69, 74, 82, 87, 89, 94,
       102, 107, 112, 113, 114, 119, 124, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149,
@@ -253,13 +254,14 @@ function init() {
   }
   // ---------------PLAYER MOVE WITH MAZE COLLISION DETECTION FUNCTION ---------------
 
-  function handleKeyUp(event) {if (!gameOver) {{
+  function handleKeyDown(event) {if (!gameOver) {{
     cells[playerPosition].classList.remove('sprite') 
     cells[playerPosition].classList.remove('powerUp') 
+
+    
     
     const x = playerPosition % width
     const y = Math.floor(playerPosition / width)
-    //finding the solution below was more painful and arduous than I care to admit.
     if (event.keyCode === 39 || event.keyCode === 68 ) {
       if (x < width - 1 && !cells[playerPosition + 1].classList.contains('maze')){
         playerPosition = playerPosition + 1 
@@ -288,6 +290,7 @@ function init() {
       cells[playerPosition].classList.remove('cookie')
       playerScore += 100
       cookiesRemaining -= 1
+      //winning condition below
       if (cookiesRemaining === 0){
         console.log('YOU WIN')
         checkHiScore()
@@ -301,11 +304,13 @@ function init() {
       }
       scoreboard.innerHTML = playerScore
     }
+    //bonus points item check 
     if (cells[playerPosition].classList.contains('berry')){
       cells[playerPosition].classList.remove('berry')
       playerScore += 8000
       starObtained()
     }
+    //powerup item check 
     if (cells[playerPosition].classList.contains('pokeBall')){
       cells[playerPosition].classList.remove('pokeBall')
       cells[playerPosition].classList.add('powerUp')
@@ -330,7 +335,7 @@ function init() {
         if (!gameOver){
           moveEnemies()
         }
-      }, 280)
+      }, 220)
     }
   }
 
@@ -365,16 +370,20 @@ function init() {
     }
   }
 
+  //end game function 
+
   function endTheGame(){
     gameoverAudio()
     checkHiScore()
     clearInterval(gametimer)
     clearInterval(berryTimer)
     gameOver = true
-    clearGrid()
+    // clearGrid()
     highScore = localStorage.getItem('highscore')
     highscoreboard.innerHTML = highScore
   }
+
+  //this function resets all elements but does not move enemies
 
   function stopGame(){
     if (!win || win){
@@ -412,6 +421,9 @@ function init() {
     gameOver = true
     
   }
+
+  //this function begins the game movement
+
   function resetGame(){
     if (!win || win){
       clearWinOrLoseScreen()
@@ -445,6 +457,7 @@ function init() {
 
   }
   
+  //win and lose screen spawn/despawn functions below
 
   function winOrLoseScreen(){
     if (!win){
@@ -479,11 +492,13 @@ function init() {
     }
   }
 
+
+  //audio functions here 
+
   function powerupAudio() {
     const powerAudio = new Audio('audio/FoundItem.mp3')
     powerAudio.play()
   }
-  
 
   function starObtained() {
     const starAudio = new Audio('audio/starjingle.mp3')
@@ -539,23 +554,22 @@ function init() {
   function startBerryTimer() {
     berryTimer = setInterval(() => {
       startBerries()
-    }, 35000)
+    }, 36000)
   }
   
 
   // * Event listeners
 
-  document.addEventListener('keyup', handleKeyUp)
-  // document.addEventListener('keyup', toggleBGM)
+  document.addEventListener('keydown', handleKeyDown)
   startTheGame.addEventListener('click', resetGame)
   stopTheGame.addEventListener('click', stopGame)
   musicOn.addEventListener('click', toggleBGMOn)
   musicOff.addEventListener('click', toggleBGMOff)
-  // startGame()
   createGrid(playerPosition)
   createMaze()
   gameOver = true
  
+  //the below function initialises the game setup but does not start enemies
   stopGame()
 }
 
