@@ -16,12 +16,14 @@ body {
   justify-content:center;
   background-color: rgb(23, 29, 29);
   min-height:900px;
+  font-family: 'Orbitron', sans-serif;
 }
 .rightSide {
   display:flex;
   flex-direction:column-reverse;
   justify-content:center;
   align-items:center;
+  font-family: 'Orbitron', sans-serif;
   /* background-color: grey; */
   height:800px;
 
@@ -32,6 +34,7 @@ body {
   display:flex;
   flex-direction:column;
   justify-content:center;
+  font-family: 'Orbitron', sans-serif;
   align-items:center;
   background-color: rgb(55, 54, 54);
   height:750px;
@@ -50,18 +53,27 @@ body {
   margin:9px;
   background-color:rgb(211, 46, 85);
   border-radius: 50%;
-  height: 80px;
-  width:80px;
+  height: 90px;
+  width:90px;
   font-size:15px ;
   color:black;
   font-weight: bold;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 1);
+  font-family: 'Orbitron', sans-serif;
 }
 
 .buttons{
   display:flex;
   flex-direction:row;
   flex-wrap:wrap;
+}
+
+.berry{
+  background-image: url('../images/starsprite.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+
 }
 .pikamanLogo img{
   width:200px;
@@ -92,6 +104,7 @@ body {
   border-width:3px;
   border-style:solid;
   border-color:black;
+  font-family: 'Orbitron', sans-serif;
   
 }
 
@@ -114,6 +127,7 @@ padding:10px
   border-width:1px;
   border-style:solid;
   border-color:black;
+  font-family: 'Orbitron', sans-serif;
 }
 
 .musicdivs{

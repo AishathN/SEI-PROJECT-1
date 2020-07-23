@@ -9,7 +9,10 @@ function init() {
   const musicOn = document.querySelector('#music')
   const musicOff = document.querySelector('#noMusic')
   let gametimer = null
+  let berryTimer = null
   let highScore = 0
+
+  //creating divs for game over and you win screens, to be appended at the appropriate time
   const wrap = document.querySelector('#wrap')
   const gameOverScreen = document.createElement('div')
   gameOverScreen.id = 'gameOverScreenID'
@@ -26,11 +29,12 @@ function init() {
   const BGM = new Audio('audio/gymlobby.mp3')
   BGM.volume = 0.2
   BGM.loop = true
+  //highscore storage setup
   highScore = localStorage.getItem('highscore')
   highscoreboard.innerHTML = highScore
   
-  // localStorage.setItem('highScore', playerScore) <-- redundant? useless? don't see another place where its declared before grabbing its value.. 
-  
+  // localStorage.setItem('highScore', playerScore) <-- redundant? useless? 
+  //don't see another place where its declared before grabbing its value.. 
 
   // * grid variables
   const width = 25
@@ -42,9 +46,9 @@ function init() {
     constructor(name, classname , scaredclassname, position) {
       this.name = name
       this.classname = classname
-      this.scaredclass = scaredclassname
+      // this.scaredclass = scaredclassname <-- ended up not using
       this.position = position
-      this.isDead = false
+      this.isDead = false //< -- needed for egg timer
     }
 
     moveRandom(){
@@ -297,6 +301,10 @@ function init() {
       }
       scoreboard.innerHTML = playerScore
     }
+    if (cells[playerPosition].classList.contains('berry')){
+      cells[playerPosition].classList.remove('berry')
+      playerScore += 8000
+    }
     if (cells[playerPosition].classList.contains('pokeBall')){
       cells[playerPosition].classList.remove('pokeBall')
       cells[playerPosition].classList.add('powerUp')
@@ -360,6 +368,7 @@ function init() {
     gameoverAudio()
     checkHiScore()
     clearInterval(gametimer)
+    clearInterval(berryTimer)
     gameOver = true
     clearGrid()
     highScore = localStorage.getItem('highscore')
@@ -371,7 +380,9 @@ function init() {
       clearWinOrLoseScreen()
     }
     clearInterval(gametimer)
+    clearInterval(berryTimer)
     BGM.pause()
+    // BGM.volume = 0.2 <-- DEBATING (probably best to let user toggle...)
     BGM.currentTime = 0
     win = null
     playerScore = 0
@@ -386,7 +397,6 @@ function init() {
     cookiesRemaining = 212
     playerPosition = 487
     cells[playerPosition].classList.add('sprite')
-    // createGrid(playerPosition)
     createMaze()
     playerPosition = 487
     cells[playerPosition].classList.add('sprite')
@@ -413,11 +423,13 @@ function init() {
     cells[enemyC.position].classList.remove('enemy3')
     cells[enemyD.position].classList.remove('enemy4')
     clearInterval(gametimer)
+    clearInterval(berryTimer)
     gameOver = false
     playerScore = 0
     scoreboard.innerHTML = playerScore
     createMaze()
     startTimer()
+    startBerryTimer()
     cookiesRemaining = 212
     playerPosition = 487
     cells[playerPosition].classList.add('sprite')
@@ -515,7 +527,22 @@ function init() {
   function toggleBGMOff(){
     BGM.volume = 0
   }
-  
+
+  function startBerries(){
+    cells[362].classList.add('berry')
+    berryTimer = setInterval(() => {
+      cells[362].classList.remove('berry')
+    }, 9000)
+  }
+
+
+
+
+  function startBerryTimer() {
+    berryTimer = setInterval(() => {
+      startBerries()
+    }, 40000)
+  }
   
 
   // * Event listeners
