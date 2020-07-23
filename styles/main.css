@@ -326,8 +326,8 @@ align-self:center;
 justify-self: center;
 position:absolute;
 /* margin:45px; */
-width:700px;
-height:550px;
+width:550px;
+height:450px;
 background-image: url('../images/pikachumediumsad.jpg');
 background-color:black;
 background-repeat: no-repeat;
@@ -339,8 +339,8 @@ background-size: cover;
   justify-self: center;
   position:absolute;
   /* margin:45px; */
-  width:700px;
-  height:550px;
+  width:550px;
+  height:450px;
   background-image: url('../images/YOUWIN.jpg');
   background-color:black;
   background-repeat: no-repeat;
@@ -352,8 +352,8 @@ background-size: cover;
     justify-self: center;
     position:absolute;
     /* margin:45px; */
-    width:650px;
-    height:530px;
+    width:500px;
+    height:400px;
     background-image: url('../images/pikamanstarterscreen.png');
     background-color:black;
     background-repeat: no-repeat;

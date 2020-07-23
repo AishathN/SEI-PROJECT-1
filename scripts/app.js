@@ -18,19 +18,19 @@ function init() {
   const wrap = document.querySelector('#wrap')
   const gameOverScreen = document.createElement('div')
   gameOverScreen.id = 'gameOverScreenID'
-  gameOverScreen.width = '750px'
-  gameOverScreen.height = '750px'
+  gameOverScreen.width = '550px'
+  gameOverScreen.height = '450px'
   const pikaSad = document.createElement('img')
   const pikaHappy = document.createElement('img')
   const youWinScreen = document.createElement('div')
   youWinScreen.id = 'youWinScreenID'
-  youWinScreen.width = '750px'
-  youWinScreen.height = '750px'
+  youWinScreen.width = '550px'
+  youWinScreen.height = '450px'
   const welcome = document.createElement('div')
   const pikaWelcome = document.createElement('img')
   welcome.id = 'welcomeID'
-  welcome.width = '750px'
-  welcome.height = '750px'
+  welcome.width = '500px'
+  welcome.height = '400px'
 
 
   // --- code for music --- needs to exist prior to other audio hence positioning
@@ -327,8 +327,8 @@ function init() {
       cells[playerPosition].classList.remove('cookie')
       playerScore += 100
       cookiesRemaining -= 1
-      //winning condition below
-      if (cookiesRemaining === 0){
+      //-----------WINNING CONDITION HERE------------
+      if (cookiesRemaining === 200){
         toggleBGMOff()
         youWinAudio()
         checkHiScore()
@@ -690,7 +690,7 @@ function init() {
   welcomeTotheGame()
   setTimeout(() => {
     wrap.removeChild(welcome)
-  }, 8000)
+  }, 4000)
   stopGame()
 }
 
