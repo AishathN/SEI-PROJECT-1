@@ -304,6 +304,7 @@ function init() {
     if (cells[playerPosition].classList.contains('berry')){
       cells[playerPosition].classList.remove('berry')
       playerScore += 8000
+      starObtained()
     }
     if (cells[playerPosition].classList.contains('pokeBall')){
       cells[playerPosition].classList.remove('pokeBall')
@@ -484,16 +485,15 @@ function init() {
   }
   
 
+  function starObtained() {
+    const starAudio = new Audio('audio/starjingle.mp3')
+    starAudio.play()
+  }
+
   function gameoverAudio() {
     const gamedeathAudio = new Audio('audio/bomb.wav')
     gamedeathAudio.play()
   }
-
-  // function checkHiScore(){
-  //   if (playerScore > highScore){
-  //     highScore = playerScore
-  //   }
-  // }
 
   function checkHiScore(){
     highScore = localStorage.getItem('highscore')
@@ -539,7 +539,7 @@ function init() {
   function startBerryTimer() {
     berryTimer = setInterval(() => {
       startBerries()
-    }, 40000)
+    }, 35000)
   }
   
 
