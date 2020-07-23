@@ -287,6 +287,7 @@ function init() {
   // ---------------PLAYER MOVE WITH MAZE COLLISION DETECTION FUNCTION ---------------
 
   function handleKeyDown(event) {if (!gameOver) {{
+    pikaCollision()
     cells[playerPosition].classList.remove('sprite') 
     cells[playerPosition].classList.remove('powerUp') 
     
@@ -597,6 +598,67 @@ function init() {
       }, 15000)
     }
   }
+
+  //-----testing new collision function ----
+  // deathOfEither(){
+  //   if (playerPosition === this.position && !cells[playerPosition].classList.contains('powerUp')){
+  //     endTheGame()
+  //     winOrLoseScreen()
+  //     win = false
+  //   } else if (playerPosition === this.position && cells[playerPosition].classList.contains('powerUp')){
+  //     this.position = 337
+  //     playerScore += 5000
+  //     cells[this.position].classList.remove(this.classname)
+  //     gameoverAudio()
+  //     this.eggTimer()
+  //   }
+  function pikaCollision(){
+    if (playerPosition === enemyA.position && !cells[playerPosition].classList.contains('powerUp')){
+      endTheGame()
+      winOrLoseScreen()
+      win = false
+     } else if (playerPosition === enemyA.position && cells[playerPosition].classList.contains('powerUp')){
+      cells[enemyA.position].classList.remove(enemyA.classname)
+      enemyA.position = 337
+      playerScore += 5000
+      cells[enemyA.position].classList.remove(enemyA.classname)
+      gameoverAudio()
+      enemyA.eggTimer()
+     } else if (playerPosition === enemyB.position && !cells[playerPosition].classList.contains('powerUp')){
+      endTheGame()
+      winOrLoseScreen()
+      win = false
+     } else if (playerPosition === enemyB.position && cells[playerPosition].classList.contains('powerUp')){
+      cells[enemyB.position].classList.remove(enemyB.classname)
+      enemyB.position = 337
+      playerScore += 5000
+      cells[enemyB.position].classList.remove(enemyB.classname)
+      gameoverAudio()
+      enemyB.eggTimer()
+     } else if (playerPosition === enemyC.position && !cells[playerPosition].classList.contains('powerUp')){
+      endTheGame()
+      winOrLoseScreen()
+      win = false
+     } else if (playerPosition === enemyC.position && cells[playerPosition].classList.contains('powerUp')){
+      cells[enemyC.position].classList.remove(enemyC.classname)
+      enemyC.position = 337
+      playerScore += 5000
+      cells[enemyC.position].classList.remove(enemyC.classname)
+      gameoverAudio()
+      enemyC.eggTimer()
+     } else if (playerPosition === enemyD.position && !cells[playerPosition].classList.contains('powerUp')){
+      endTheGame()
+      winOrLoseScreen()
+      win = false
+     } else if (playerPosition === enemyD.position && cells[playerPosition].classList.contains('powerUp')){
+      cells[enemyD.position].classList.remove(enemyD.classname)
+      enemyD.position = 337
+      playerScore += 5000
+      cells[enemyD.position].classList.remove(enemyD.classname)
+      gameoverAudio()
+      enemyD.eggTimer()
+     }
+  } 
 
   // * Event listeners
 
