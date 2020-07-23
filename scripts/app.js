@@ -10,6 +10,7 @@ function init() {
   const musicOff = document.querySelector('#noMusic')
   let gametimer = null
   let berryTimer = null
+  let powerUpTimer = null
   let highScore = 0
   let win = null
 
@@ -346,18 +347,14 @@ function init() {
     }
     //powerup item check 
     if (cells[playerPosition].classList.contains('pokeBall')){
-      cells[playerPosition].classList.remove('pokeBall')
-      cells[playerPosition].classList.add('powerUp')
-      powerupAudio()
-      poweredUp = true
-      setTimeout(() => {
-        cells[playerPosition].classList.remove('powerUp')
-        poweredUp = false
-      }, 5000)
+      poweringUp()
     }
+
   }
   }
   }
+  
+  
 
   //---------- ENEMY TIMER --------
 
@@ -462,6 +459,7 @@ function init() {
     }
     BGM.currentTime = 0
     BGM.play()
+    BGM.volume = 0.2
     win = null
     cells[enemyA.position].classList.remove('enemy1')
     cells[enemyB.position].classList.remove('enemy2')
@@ -510,13 +508,13 @@ function init() {
   }
   function clearGOScreen(){
     if (win === false){
-    wrap.removeChild(gameOverScreen)
+      wrap.removeChild(gameOverScreen)
     }
   }
 
   function clearWINScreen(){
     if (win === true){
-    wrap.removeChild(youWinScreen)
+      wrap.removeChild(youWinScreen)
     }
   }
 
@@ -599,66 +597,74 @@ function init() {
     }
   }
 
-  //-----testing new collision function ----
-  // deathOfEither(){
-  //   if (playerPosition === this.position && !cells[playerPosition].classList.contains('powerUp')){
-  //     endTheGame()
-  //     winOrLoseScreen()
-  //     win = false
-  //   } else if (playerPosition === this.position && cells[playerPosition].classList.contains('powerUp')){
-  //     this.position = 337
-  //     playerScore += 5000
-  //     cells[this.position].classList.remove(this.classname)
-  //     gameoverAudio()
-  //     this.eggTimer()
-  //   }
+  //extra collision detection on player side
+
   function pikaCollision(){
     if (playerPosition === enemyA.position && !cells[playerPosition].classList.contains('powerUp')){
       endTheGame()
       winOrLoseScreen()
       win = false
-     } else if (playerPosition === enemyA.position && cells[playerPosition].classList.contains('powerUp')){
+    } else if (playerPosition === enemyA.position && cells[playerPosition].classList.contains('powerUp')){
       cells[enemyA.position].classList.remove(enemyA.classname)
       enemyA.position = 337
       playerScore += 5000
       cells[enemyA.position].classList.remove(enemyA.classname)
       gameoverAudio()
       enemyA.eggTimer()
-     } else if (playerPosition === enemyB.position && !cells[playerPosition].classList.contains('powerUp')){
+    } else if (playerPosition === enemyB.position && !cells[playerPosition].classList.contains('powerUp')){
       endTheGame()
       winOrLoseScreen()
       win = false
-     } else if (playerPosition === enemyB.position && cells[playerPosition].classList.contains('powerUp')){
+    } else if (playerPosition === enemyB.position && cells[playerPosition].classList.contains('powerUp')){
       cells[enemyB.position].classList.remove(enemyB.classname)
       enemyB.position = 337
       playerScore += 5000
       cells[enemyB.position].classList.remove(enemyB.classname)
       gameoverAudio()
       enemyB.eggTimer()
-     } else if (playerPosition === enemyC.position && !cells[playerPosition].classList.contains('powerUp')){
+    } else if (playerPosition === enemyC.position && !cells[playerPosition].classList.contains('powerUp')){
       endTheGame()
       winOrLoseScreen()
       win = false
-     } else if (playerPosition === enemyC.position && cells[playerPosition].classList.contains('powerUp')){
+    } else if (playerPosition === enemyC.position && cells[playerPosition].classList.contains('powerUp')){
       cells[enemyC.position].classList.remove(enemyC.classname)
       enemyC.position = 337
       playerScore += 5000
       cells[enemyC.position].classList.remove(enemyC.classname)
       gameoverAudio()
       enemyC.eggTimer()
-     } else if (playerPosition === enemyD.position && !cells[playerPosition].classList.contains('powerUp')){
+    } else if (playerPosition === enemyD.position && !cells[playerPosition].classList.contains('powerUp')){
       endTheGame()
       winOrLoseScreen()
       win = false
-     } else if (playerPosition === enemyD.position && cells[playerPosition].classList.contains('powerUp')){
+    } else if (playerPosition === enemyD.position && cells[playerPosition].classList.contains('powerUp')){
       cells[enemyD.position].classList.remove(enemyD.classname)
       enemyD.position = 337
       playerScore += 5000
       cells[enemyD.position].classList.remove(enemyD.classname)
       gameoverAudio()
       enemyD.eggTimer()
-     }
+    }
   } 
+
+  function poweringUp(){
+    if (!cells[playerPosition].classList.contains('powerUp')){
+      powerUpTime()
+    } else if (cells[playerPosition].classList.contains('powerUp')){
+      clearTimeout(powerUpTimer)
+      powerUpTime()
+    }
+  }
+  function powerUpTime(){
+    cells[playerPosition].classList.remove('pokeBall')
+    cells[playerPosition].classList.add('powerUp')
+    powerupAudio()
+    poweredUp = true
+    powerUpTimer = setTimeout(() => {
+      cells[playerPosition].classList.remove('powerUp')
+      poweredUp = false
+    }, 5000)
+  }
 
   // * Event listeners
 
