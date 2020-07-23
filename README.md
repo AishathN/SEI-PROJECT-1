@@ -27,6 +27,10 @@ Brief - Create a Pac-man game with the following minimum requirements:
 
 * ASSETS SOURCE: The game has music and sound effects from Pokemon Sword and Shield, as well as several free sound library effects and free game tiles. Animated gifs of various pokemon from around the web were used to populate the game.
 
+# Known bugs / issues
+
+* The player can sometimes pass through enemies when powered up, without eliminating them. This happens occasionally when the movement keys are held down. Possible cause, the interval function that calculates enemy movement might not be firing fast enough to detect the collision when keys are held down?
+
 # Future additions
 
 * Further styling for maze tile variety.
