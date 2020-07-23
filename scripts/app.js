@@ -528,15 +528,13 @@ function init() {
     BGM.volume = 0
   }
 
+  //nested berry timer function
   function startBerries(){
     cells[362].classList.add('berry')
     berryTimer = setInterval(() => {
       cells[362].classList.remove('berry')
     }, 9000)
   }
-
-
-
 
   function startBerryTimer() {
     berryTimer = setInterval(() => {
