@@ -544,18 +544,21 @@ function init() {
   }
 
   //nested berry timer function
-  function startBerries(){
-    cells[362].classList.add('berry')
-    berryTimer = setInterval(() => {
-      cells[362].classList.remove('berry')
-    }, 9000)
-  }
 
   function startBerryTimer() {
     berryTimer = setInterval(() => {
+      cells[362].classList.add('berry')
       startBerries()
-    }, 36000)
+    }, 30000)
   }
+  function startBerries(){
+    if (cells[362].classList.contains('berry')){
+      berryTimer = setTimeout(() => {
+        cells[362].classList.remove('berry')
+      }, 15000)
+    }
+  }
+
   
 
   // * Event listeners
