@@ -109,7 +109,6 @@ function init() {
     deathOfEither(){
       if (playerPosition === this.position && !cells[playerPosition].classList.contains('powerUp')){
         endTheGame()
-        // clearGrid()
         winOrLoseScreen()
         win = false
       } else if (playerPosition === this.position && cells[playerPosition].classList.contains('powerUp')){
@@ -164,6 +163,7 @@ function init() {
       }, 6000)
     }
   }
+
   //create enemies from constructor function 
   const enemyA = new enemy('enemy1', 'enemy1', 'scaredenemy1', 337, false)
   const enemyB = new enemy('enemy2', 'enemy2', 'scaredenemy2', 338, false)
@@ -185,8 +185,7 @@ function init() {
       cells[i].classList = null
       
     }
-  }
-  
+  }  
 
   //------ GRID CREATION AND PLAYER/ENEMY RESET FUNCTION -------------
   function createGrid(startingPosition) {
@@ -206,7 +205,6 @@ function init() {
     cells[enemyC.position].classList.add('enemy3')
     enemyD.position = 338
     cells[enemyD.position].classList.add('enemy4')
-
   }
 
   //----------- MAZE CREATION FUNCTION-----------
@@ -214,13 +212,13 @@ function init() {
   function createMaze(){
     const mazeCoords1 = 
     [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 50, 53, 54, 55, 78, 51, 56,
-      58, 59, 60, 61, 63, 65, 66, 67, 68, 70, 71, 72, 73, 75,76, 81, 83, 86, 88, 90, 93, 95, 98,
+      58, 59, 60, 61, 63, 65, 66, 67, 68, 70, 71, 72, 73, 75,76, 81, 83, 84, 85,86, 88, 90,91, 92, 93, 95, 98,
       100,101, 103,104,105,106,108,109,110,111,115, 116, 117, 118, 120, 121, 122, 123, 125, 126, 150,151, 153, 154, 155, 156, 158, 160, 161,162, 163, 164, 165, 166, 168, 170,171,
-      172, 173, 175, 176, 178, 181, 183, 185, 186, 187, 188, 189, 190, 191 ,193, 195, 198,
+      172, 173, 175, 176, 178,179,180, 181, 183, 185, 186, 187, 188, 189, 190, 191 ,193, 195, 196,197, 198,
       200, 203, 204, 205, 206, 208, 213, 218, 220, 221, 222, 223, 225, 226, 234, 235, 236, 238, 240, 241, 242,243, 252, 253, 254, 255, 256, 268, 270, 271, 272, 273, 274, 276,  281,
-      250,275,201, 251,295,291, 285, 233, 258, 283,  293, 
-      306, 302, 301, 326, 310, 335, 302, 303, 304, 305, 318, 308, 320, 321, 322, 323, 324, 352, 353, 354, 300, 325, 350, 375, 351, 
-      376, 370, 371, 372, 373, 374, 395, 310, 335, 360, 361, 365, 358, 383,  368, 393, 331, 345, 356, 381, 366, 316, 341,
+      250,275,201, 251,295,291, 285, 233, 258, 283,  293, 277, 279,
+      306, 301, 326, 310, 335, 318, 308, 320, 352, 353, 354, 300, 325, 350, 375, 351, 346, 347, 348, 349,
+      376, 370, 371, 372, 373, 374, 380, 395, 310, 335, 360, 361, 365, 358, 383,  368, 393, 331, 345, 356, 381, 366, 316, 341,
       402, 403, 404, 405, 406, 408,  420, 421, 422, 423, 424, 401, 426, 451, 476,  418, 453, 454, 455, 480, 457, 458, 459, 460, 
       461, 465, 466, 467, 468, 471, 472, 473,  410, 411, 412, 413, 414, 415, 416, 438, 463, 496,469,  400, 425, 450, 475,
       521, 519, 538, 563, 505, 509, 510, 511, 512, 513, 514, 515, 516, 517,  500, 525, 550, 575, 501, 526, 551, 576, 355, 544, 
@@ -231,6 +229,40 @@ function init() {
     mazeCoords1.map( coord =>{
       cells[coord-1].classList.add('maze')
     })
+
+    //assigning custom town and environment pieces below
+    cells[301].classList.add('townpieceA')
+    cells[302].classList.add('townpieceB')
+    cells[303].classList.add('townpieceC')
+    cells[304].classList.add('townpieceD')
+    cells[326].classList.add('townpieceE')
+    cells[327].classList.add('townpieceF')
+    cells[328].classList.add('townpieceG')
+    cells[329].classList.add('townpieceH')
+
+    cells[295].classList.add('townpieceA')
+    cells[296].classList.add('townpieceB')
+    cells[297].classList.add('townpieceC')
+    cells[298].classList.add('townpieceD')
+    cells[320].classList.add('townpieceE')
+    cells[321].classList.add('townpieceF')
+    cells[322].classList.add('townpieceG')
+    cells[323].classList.add('townpieceH')
+
+    cells[277].classList.add('townpieceA')
+    cells[279].classList.add('townpieceD')
+    cells[78].classList.add('lake1')
+    cells[79].classList.add('lake2')
+    cells[95].classList.add('lake1')
+    cells[96].classList.add('lake2')
+    cells[396].classList.add('lake1')
+    cells[397].classList.add('lake2')
+    cells[395].classList.add('townpieceA')
+    cells[398].classList.add('townpieceD')
+
+    cells[376].classList.add('townpieceA')
+    cells[377].classList.add('townpieceH')
+    cells[378].classList.add('townpieceD')
 
     //----- apple creation ------
 
@@ -257,8 +289,6 @@ function init() {
   function handleKeyDown(event) {if (!gameOver) {{
     cells[playerPosition].classList.remove('sprite') 
     cells[playerPosition].classList.remove('powerUp') 
-
-    
     
     const x = playerPosition % width
     const y = Math.floor(playerPosition / width)
@@ -293,6 +323,8 @@ function init() {
       //winning condition below
       if (cookiesRemaining === 0){
         console.log('YOU WIN')
+        toggleBGMOff()
+        youWinAudio()
         checkHiScore()
         youWinGraphic()
         win = true
@@ -309,6 +341,7 @@ function init() {
       cells[playerPosition].classList.remove('berry')
       playerScore += 8000
       starObtained()
+      
     }
     //powerup item check 
     if (cells[playerPosition].classList.contains('pokeBall')){
@@ -378,7 +411,6 @@ function init() {
     clearInterval(gametimer)
     clearInterval(berryTimer)
     gameOver = true
-    // clearGrid()
     highScore = localStorage.getItem('highscore')
     highscoreboard.innerHTML = highScore
   }
@@ -392,7 +424,6 @@ function init() {
     clearInterval(gametimer)
     clearInterval(berryTimer)
     BGM.pause()
-    // BGM.volume = 0.2 <-- DEBATING (probably best to let user toggle...)
     BGM.currentTime = 0
     win = null
     playerScore = 0
@@ -463,21 +494,17 @@ function init() {
     if (!win){
       GameOverGraphic()
       BGM.pause()
-      console.log("this is win or lose LOSE screen firing")
     } else {
       youWinGraphic()
       BGM.pause()
-      console.log("this is you win choice firing")
     }
   }
 
   function clearWinOrLoseScreen(){
     if (win === false){
       clearGOScreen()
-      console.log("this is clear GO screen firing")
     } else if (win === true){
       clearWINScreen()
-      console.log("this is clear win screen firing")
     }
   }
   function clearGOScreen(){
@@ -492,23 +519,31 @@ function init() {
     }
   }
 
-
   //audio functions here 
 
   function powerupAudio() {
     const powerAudio = new Audio('audio/FoundItem.mp3')
+    powerAudio.volume = 0.4
     powerAudio.play()
   }
 
   function starObtained() {
     const starAudio = new Audio('audio/starjingle.mp3')
+    starAudio.volume = 0.4
     starAudio.play()
   }
 
   function gameoverAudio() {
     const gamedeathAudio = new Audio('audio/bomb.wav')
+    gamedeathAudio.volume = 0.4
     gamedeathAudio.play()
   }
+  function youWinAudio() {
+    const winAudio = new Audio('audio/youwin.mp3')
+    winAudio.volume = 0.4
+    winAudio.play()
+  }
+  //high score check
 
   function checkHiScore(){
     highScore = localStorage.getItem('highscore')
@@ -519,6 +554,8 @@ function init() {
     highscoreboard.innerHTML = highScore
   }
 
+  //game over and you win graphics 
+
   function GameOverGraphic(){
     gameOverScreen.appendChild(pikaSad)
     wrap.appendChild(gameOverScreen)
@@ -527,15 +564,17 @@ function init() {
   function youWinGraphic(){
     youWinScreen.appendChild(pikaHappy)
     wrap.appendChild(youWinScreen)
-    console.log("you win graphic firing")
   }
+
+  //removing powerup from player after time limit
 
   setTimeout(() => {
     cells[playerPosition].classList.remove('powerUp')
     poweredUp = false
   }, 5000)
   
-  
+  //gackground music volume to zero or low
+
   function toggleBGMOn(){
     BGM.volume = 0.2
   }
@@ -558,8 +597,6 @@ function init() {
       }, 15000)
     }
   }
-
-  
 
   // * Event listeners
 

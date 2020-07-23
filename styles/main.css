@@ -83,6 +83,76 @@ body {
   border-color:black;
 }
 
+.townpieceA{
+  background-image: url('../images/townpieceA.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.townpieceB{
+  background-image: url('../images/townpieceB.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.townpieceC{
+  background-image: url('../images/townpieceD.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.townpieceD{
+  background-image: url('../images/townpieceC.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.townpieceE{
+  background-image: url('../images/townpieceE.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.townpieceF{
+  background-image: url('../images/townpieceF.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.townpieceG{
+  background-image: url('../images/townpieceH.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.townpieceH{
+  background-image: url('../images/townpieceG.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.lake1{
+  background-image: url('../images/lake1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.lake2{
+  background-image: url('../images/lake2.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
 .grid-wrapper {
   height: 90vh;
   display: flex;

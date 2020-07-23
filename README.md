@@ -1,7 +1,7 @@
 # SEI-PROJECT-1
 General Assembly project 1
 
-CURRENT PROJECT - PAC-MAN VARIANT.
+CURRENT PROJECT - PAC-MAN VARIANT - 6 days.
 ----------------------------------
 
 Brief - Create a Pac-man game with the following minimum requirements: 
@@ -29,5 +29,4 @@ Brief - Create a Pac-man game with the following minimum requirements:
 
 # Future additions
 
-* Further styling
-* integration of more sound effects  
+* Further styling for maze tile variety.
