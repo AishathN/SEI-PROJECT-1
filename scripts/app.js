@@ -32,7 +32,6 @@ function init() {
   welcome.width = '500px'
   welcome.height = '400px'
 
-
   // --- code for music --- needs to exist prior to other audio hence positioning
   const BGM = new Audio('audio/gymlobby.mp3')
   BGM.volume = 0.2
@@ -399,7 +398,6 @@ function init() {
       if (!enemyD.isDead) {
         enemyD.flee()
       }
-      
     }
   }
 
