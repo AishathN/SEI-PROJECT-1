@@ -695,7 +695,7 @@ function init() {
   welcomeTotheGame()
   setTimeout(() => {
     wrap.removeChild(welcome)
-  }, 4000)
+  }, 3000)
   stopGame()
 }
 
