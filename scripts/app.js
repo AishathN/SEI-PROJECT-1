@@ -325,6 +325,7 @@ function init() {
     //check for and eat cookies, log points
     if (cells[playerPosition].classList.contains('cookie')){
       cells[playerPosition].classList.remove('cookie')
+      getItem()
       playerScore += 100
       cookiesRemaining -= 1
       //-----------WINNING CONDITION HERE------------
@@ -460,7 +461,7 @@ function init() {
     }
     BGM.currentTime = 0
     BGM.play()
-    BGM.volume = 0.2
+    // BGM.volume = 0.2
     win = null
     cells[enemyA.position].classList.remove('enemy1')
     cells[enemyB.position].classList.remove('enemy2')
@@ -542,6 +543,12 @@ function init() {
     const winAudio = new Audio('audio/youwin.mp3')
     winAudio.volume = 0.4
     winAudio.play()
+  }
+
+  function getItem() {
+    const eatItem = new Audio('audio/eatapple2.mp3')
+    eatItem.volume = 0.1
+    eatItem.play()
   }
   //high score check
 
